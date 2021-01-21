@@ -1,0 +1,10 @@
+{
+  
+  "0": {
+    "title": "Node.js client for object stores like AWS S3, GCP GCS or Minio",
+    "content": "Node.js client for object stores like AWS S3, GCP GCS or Minio . TODO .",
+    "url": "/object-storage-js/",
+    "relUrl": "/"
+  }
+  
+}
