@@ -1,3 +1,12 @@
+export const SECRET_ACCESS_KEY = 'secret-access-key';
+export const ACCESS_KEY = 'the-access-key';
+export const ENDPOINT = 'the-endpoint';
+export const HMAC_KEY_CONFIG = {
+  accessKeyId: ACCESS_KEY,
+  endpoint: ENDPOINT,
+  secretAccessKey: SECRET_ACCESS_KEY,
+};
+
 export async function asyncIterableToArray<T>(iterable: AsyncIterable<T>): Promise<readonly T[]> {
   // tslint:disable-next-line:readonly-array
   const values = [];

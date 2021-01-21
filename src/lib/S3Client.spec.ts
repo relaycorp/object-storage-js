@@ -1,7 +1,15 @@
 import * as http from 'http';
 import * as https from 'https';
 
-import { asyncIterableToArray, getMockContext, mockSpy } from './_test_utils';
+import {
+  ACCESS_KEY,
+  asyncIterableToArray,
+  ENDPOINT,
+  getMockContext,
+  HMAC_KEY_CONFIG,
+  mockSpy,
+  SECRET_ACCESS_KEY,
+} from './_test_utils';
 import { StoreObject } from './StoreObject';
 
 const mockS3Client = {
@@ -16,29 +24,17 @@ jest.mock('aws-sdk', () => ({
 import * as AWS from 'aws-sdk';
 import { S3Client } from './S3Client';
 
-const SECRET_ACCESS_KEY = 'secret-access-key';
-const ACCESS_KEY = 'the-access-key';
-const ENDPOINT = 'the-endpoint';
-
 const BUCKET = 'the-bucket';
 const OBJECT_KEY = 'the-object.txt';
 const OBJECT: StoreObject = { body: Buffer.from('the-body'), metadata: { foo: 'bar' } };
 
-const CLIENT = new S3Client({
-  accessKeyId: ACCESS_KEY,
-  endpoint: ENDPOINT,
-  secretAccessKey: SECRET_ACCESS_KEY,
-});
+const CLIENT = new S3Client(HMAC_KEY_CONFIG);
 
 describe('Constructor', () => {
   describe('Client', () => {
     test('Specified endpoint should be used', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client({
-        accessKeyId: ACCESS_KEY,
-        endpoint: ENDPOINT,
-        secretAccessKey: SECRET_ACCESS_KEY,
-      });
+      new S3Client(HMAC_KEY_CONFIG);
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -48,11 +44,7 @@ describe('Constructor', () => {
 
     test('Specified credentials should be used', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client({
-        accessKeyId: ACCESS_KEY,
-        endpoint: ENDPOINT,
-        secretAccessKey: SECRET_ACCESS_KEY,
-      });
+      new S3Client(HMAC_KEY_CONFIG);
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -63,11 +55,7 @@ describe('Constructor', () => {
 
     test('Signature should use version 4', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client({
-        accessKeyId: ACCESS_KEY,
-        endpoint: ENDPOINT,
-        secretAccessKey: SECRET_ACCESS_KEY,
-      });
+      new S3Client(HMAC_KEY_CONFIG);
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -77,11 +65,7 @@ describe('Constructor', () => {
 
     test('s3ForcePathStyle should be enabled', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client({
-        accessKeyId: ACCESS_KEY,
-        endpoint: ENDPOINT,
-        secretAccessKey: SECRET_ACCESS_KEY,
-      });
+      new S3Client(HMAC_KEY_CONFIG);
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -91,11 +75,7 @@ describe('Constructor', () => {
 
     test('TSL should be enabled by default', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client({
-        accessKeyId: ACCESS_KEY,
-        endpoint: ENDPOINT,
-        secretAccessKey: SECRET_ACCESS_KEY,
-      });
+      new S3Client(HMAC_KEY_CONFIG);
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -105,12 +85,7 @@ describe('Constructor', () => {
 
     test('TSL may be disabled', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client({
-        accessKeyId: ACCESS_KEY,
-        endpoint: ENDPOINT,
-        secretAccessKey: SECRET_ACCESS_KEY,
-        tlsEnabled: false,
-      });
+      new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: false });
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -121,12 +96,7 @@ describe('Constructor', () => {
     describe('HTTP(S) agent', () => {
       test('HTTP agent with Keep-Alive should be used when TSL is disabled', () => {
         // tslint:disable-next-line:no-unused-expression
-        new S3Client({
-          accessKeyId: ACCESS_KEY,
-          endpoint: ENDPOINT,
-          secretAccessKey: SECRET_ACCESS_KEY,
-          tlsEnabled: false,
-        });
+        new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: false });
 
         expect(AWS.S3).toBeCalledTimes(1);
 
@@ -138,12 +108,7 @@ describe('Constructor', () => {
 
       test('HTTPS agent with Keep-Alive should be used when TSL is enabled', () => {
         // tslint:disable-next-line:no-unused-expression
-        new S3Client({
-          accessKeyId: ACCESS_KEY,
-          endpoint: ENDPOINT,
-          secretAccessKey: SECRET_ACCESS_KEY,
-          tlsEnabled: true,
-        });
+        new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: true });
 
         expect(AWS.S3).toBeCalledTimes(1);
 
