@@ -1,10 +1,6 @@
 {
   "exclude": ["**/*.spec.ts"],
-  "excludeNotExported": true,
   "excludePrivate": true,
   "excludeProtected": true,
-  "ignoreCompilerErrors": true,
-  "mode": "file",
-  "target": "ES6",
   "theme": "minimal"
 }
