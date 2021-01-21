@@ -4,7 +4,7 @@ import { StoreObject } from './StoreObject';
  * Interface for all object store clients.
  */
 export interface ObjectStoreClient {
-  getObject(key: string, bucket: string): Promise<StoreObject>;
+  readonly getObject: (key: string, bucket: string) => Promise<StoreObject>;
 
   /**
    * Retrieve the keys for all the objects in the specified bucket with the specified key prefix.
@@ -14,9 +14,9 @@ export interface ObjectStoreClient {
    * @param prefix
    * @param bucket
    */
-  listObjectKeys(prefix: string, bucket: string): AsyncIterable<string>;
+  readonly listObjectKeys: (prefix: string, bucket: string) => AsyncIterable<string>;
 
-  putObject(object: StoreObject, key: string, bucket: string): Promise<void>;
+  readonly putObject: (object: StoreObject, key: string, bucket: string) => Promise<void>;
 
-  deleteObject(key: string, bucket: string): Promise<void>;
+  readonly deleteObject: (key: string, bucket: string) => Promise<void>;
 }
