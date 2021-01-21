@@ -32,8 +32,7 @@
   "engines": {
     "node": ">=12"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@relaycorp/shared-config": "^1.4.7",
     "@types/verror": "^1.10.4",
