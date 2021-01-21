@@ -1,0 +1,15 @@
+src
+docs/
+build/
+
+tsconfig*.json
+tslint.json
+.prettierignore
+.editorconfig
+.releaserc.yml
+
+.vscode/
+.idea/
+
+.github/
+.dependabot/
