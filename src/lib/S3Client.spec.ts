@@ -24,13 +24,21 @@ const BUCKET = 'the-bucket';
 const OBJECT_KEY = 'the-object.txt';
 const OBJECT: StoreObject = { body: Buffer.from('the-body'), metadata: { foo: 'bar' } };
 
-const CLIENT = new S3Client(ENDPOINT, ACCESS_KEY, SECRET_ACCESS_KEY);
+const CLIENT = new S3Client({
+  accessKeyId: ACCESS_KEY,
+  endpoint: ENDPOINT,
+  secretAccessKey: SECRET_ACCESS_KEY,
+});
 
 describe('Constructor', () => {
   describe('Client', () => {
     test('Specified endpoint should be used', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client(ENDPOINT, ACCESS_KEY, SECRET_ACCESS_KEY);
+      new S3Client({
+        accessKeyId: ACCESS_KEY,
+        endpoint: ENDPOINT,
+        secretAccessKey: SECRET_ACCESS_KEY,
+      });
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -40,7 +48,11 @@ describe('Constructor', () => {
 
     test('Specified credentials should be used', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client(ENDPOINT, ACCESS_KEY, SECRET_ACCESS_KEY);
+      new S3Client({
+        accessKeyId: ACCESS_KEY,
+        endpoint: ENDPOINT,
+        secretAccessKey: SECRET_ACCESS_KEY,
+      });
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -51,7 +63,11 @@ describe('Constructor', () => {
 
     test('Signature should use version 4', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client(ENDPOINT, ACCESS_KEY, SECRET_ACCESS_KEY);
+      new S3Client({
+        accessKeyId: ACCESS_KEY,
+        endpoint: ENDPOINT,
+        secretAccessKey: SECRET_ACCESS_KEY,
+      });
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -61,7 +77,11 @@ describe('Constructor', () => {
 
     test('s3ForcePathStyle should be enabled', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client(ENDPOINT, ACCESS_KEY, SECRET_ACCESS_KEY);
+      new S3Client({
+        accessKeyId: ACCESS_KEY,
+        endpoint: ENDPOINT,
+        secretAccessKey: SECRET_ACCESS_KEY,
+      });
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -71,7 +91,11 @@ describe('Constructor', () => {
 
     test('TSL should be enabled by default', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client(ENDPOINT, ACCESS_KEY, SECRET_ACCESS_KEY);
+      new S3Client({
+        accessKeyId: ACCESS_KEY,
+        endpoint: ENDPOINT,
+        secretAccessKey: SECRET_ACCESS_KEY,
+      });
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -81,7 +105,12 @@ describe('Constructor', () => {
 
     test('TSL may be disabled', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client(ENDPOINT, ACCESS_KEY, SECRET_ACCESS_KEY, false);
+      new S3Client({
+        accessKeyId: ACCESS_KEY,
+        endpoint: ENDPOINT,
+        secretAccessKey: SECRET_ACCESS_KEY,
+        tlsEnabled: false,
+      });
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -92,7 +121,12 @@ describe('Constructor', () => {
     describe('HTTP(S) agent', () => {
       test('HTTP agent with Keep-Alive should be used when TSL is disabled', () => {
         // tslint:disable-next-line:no-unused-expression
-        new S3Client(ENDPOINT, ACCESS_KEY, SECRET_ACCESS_KEY, false);
+        new S3Client({
+          accessKeyId: ACCESS_KEY,
+          endpoint: ENDPOINT,
+          secretAccessKey: SECRET_ACCESS_KEY,
+          tlsEnabled: false,
+        });
 
         expect(AWS.S3).toBeCalledTimes(1);
 
@@ -104,7 +138,12 @@ describe('Constructor', () => {
 
       test('HTTPS agent with Keep-Alive should be used when TSL is enabled', () => {
         // tslint:disable-next-line:no-unused-expression
-        new S3Client(ENDPOINT, ACCESS_KEY, SECRET_ACCESS_KEY, true);
+        new S3Client({
+          accessKeyId: ACCESS_KEY,
+          endpoint: ENDPOINT,
+          secretAccessKey: SECRET_ACCESS_KEY,
+          tlsEnabled: true,
+        });
 
         expect(AWS.S3).toBeCalledTimes(1);
 
