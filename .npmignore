@@ -2,4 +2,5 @@
 !build/main/**
 !build/module/**
 !LICENSE
+!README.md
 !package.json
