@@ -9,8 +9,8 @@ import {
   HMAC_KEY_CONFIG,
   mockSpy,
   SECRET_ACCESS_KEY,
-} from './_test_utils';
-import { StoreObject } from './StoreObject';
+} from '../_test_utils';
+import { StoreObject } from '../StoreObject';
 
 const mockS3Client = {
   deleteObject: mockSpy(jest.fn(), () => ({ promise: () => Promise.resolve() })),
@@ -73,9 +73,9 @@ describe('Constructor', () => {
       expect(s3CallArgs).toHaveProperty('s3ForcePathStyle', true);
     });
 
-    test('TSL should be enabled by default', () => {
+    test('TSL should be enabled if requested', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client(HMAC_KEY_CONFIG);
+      new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: true });
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -83,7 +83,7 @@ describe('Constructor', () => {
       expect(s3CallArgs).toHaveProperty('sslEnabled', true);
     });
 
-    test('TSL may be disabled', () => {
+    test('TSL may be disabled if requested', () => {
       // tslint:disable-next-line:no-unused-expression
       new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: false });
 

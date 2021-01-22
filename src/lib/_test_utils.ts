@@ -1,10 +1,13 @@
+import { ClientHMACKeyConfig } from './ClientConfig';
+
 export const SECRET_ACCESS_KEY = 'secret-access-key';
 export const ACCESS_KEY = 'the-access-key';
 export const ENDPOINT = 'the-endpoint';
-export const HMAC_KEY_CONFIG = {
+export const HMAC_KEY_CONFIG: ClientHMACKeyConfig = {
   accessKeyId: ACCESS_KEY,
-  endpoint: ENDPOINT,
+  endpointURL: ENDPOINT,
   secretAccessKey: SECRET_ACCESS_KEY,
+  tlsEnabled: true,
 };
 
 export async function asyncIterableToArray<T>(iterable: AsyncIterable<T>): Promise<readonly T[]> {

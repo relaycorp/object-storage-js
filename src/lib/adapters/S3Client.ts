@@ -2,9 +2,9 @@ import { S3 } from 'aws-sdk';
 import * as http from 'http';
 import * as https from 'https';
 
-import { ClientHMACKeyConfig } from './ClientConfig';
-import { ObjectStoreClient } from './ObjectStoreClient';
-import { StoreObject } from './StoreObject';
+import { ClientHMACKeyConfig } from '../ClientConfig';
+import { ObjectStoreClient } from '../ObjectStoreClient';
+import { StoreObject } from '../StoreObject';
 
 /**
  * Thin wrapper around S3-compatible object storage library.
@@ -14,16 +14,15 @@ export class S3Client implements ObjectStoreClient {
 
   constructor(config: ClientHMACKeyConfig) {
     const agentOptions = { keepAlive: true };
-    const tlsEnabled = config.tlsEnabled !== false;
-    const agent = tlsEnabled ? new https.Agent(agentOptions) : new http.Agent(agentOptions);
+    const agent = config.tlsEnabled ? new https.Agent(agentOptions) : new http.Agent(agentOptions);
     this.client = new S3({
       accessKeyId: config.accessKeyId,
-      endpoint: config.endpoint,
+      endpoint: config.endpointURL,
       httpOptions: { agent },
       s3ForcePathStyle: true,
       secretAccessKey: config.secretAccessKey,
       signatureVersion: 'v4',
-      sslEnabled: tlsEnabled,
+      sslEnabled: config.tlsEnabled,
     });
   }
 

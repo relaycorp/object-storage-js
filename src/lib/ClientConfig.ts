@@ -1,6 +1,6 @@
 interface ClientConfig {
-  readonly endpoint: string;
-  readonly tlsEnabled?: boolean;
+  readonly endpointURL: string;
+  readonly tlsEnabled: boolean;
 }
 
 export interface ClientHMACKeyConfig extends ClientConfig {
