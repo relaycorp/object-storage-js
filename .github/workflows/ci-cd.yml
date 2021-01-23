@@ -24,7 +24,8 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - run: npm run static-checks
-      - run: npm run build
+      - run: test:ci:unit
+
   release:
     needs: ci
     if: github.ref == 'refs/heads/main'
