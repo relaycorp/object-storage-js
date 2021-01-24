@@ -55,9 +55,7 @@ describe('Constructor', () => {
 
     const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
     expect(s3CallArgs).not.toHaveProperty('endpoint');
-  });
-
-  test('Specified credentials should be used', () => {
+  });test('Specified credentials should be used', () => {
     // tslint:disable-next-line:no-unused-expression
     new S3Client({ ...CLIENT_CONFIG, credentials: CLIENT_CREDENTIALS });
 
@@ -77,9 +75,7 @@ describe('Constructor', () => {
     const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
     expect(s3CallArgs).not.toHaveProperty('accessKeyId');
     expect(s3CallArgs).not.toHaveProperty('secretAccessKey');
-  });
-
-  test('Signature should use version 4', () => {
+  });test('Signature should use version 4', () => {
     // tslint:disable-next-line:no-unused-expression
     new S3Client(CLIENT_CONFIG);
 
