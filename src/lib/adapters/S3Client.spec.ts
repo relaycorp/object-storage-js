@@ -10,8 +10,14 @@ import {
   mockSpy,
   SECRET_ACCESS_KEY,
 } from '../_test_utils';
-import { ClientConfig } from '../config';
-import { StoreObject } from '../StoreObject';
+import {
+  BUCKET,
+  CLIENT_CONFIG,
+  OBJECT,
+  OBJECT1_KEY,
+  OBJECT2_KEY,
+  OBJECT_PREFIX,
+} from './_test_utils';
 
 const mockS3Client = {
   deleteObject: mockSpy(jest.fn(), () => ({ promise: () => Promise.resolve() })),
@@ -24,15 +30,6 @@ jest.mock('aws-sdk', () => ({
 }));
 import * as AWS from 'aws-sdk';
 import { S3Client } from './S3Client';
-
-const BUCKET = 'the-bucket';
-const OBJECT_KEY = 'the-object.txt';
-const OBJECT: StoreObject = { body: Buffer.from('the-body'), metadata: { foo: 'bar' } };
-
-const CLIENT_CONFIG: ClientConfig = {
-  endpoint: ENDPOINT,
-  tlsEnabled: true,
-};
 
 const CLIENT = new S3Client(CLIENT_CONFIG);
 
@@ -55,7 +52,9 @@ describe('Constructor', () => {
 
     const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
     expect(s3CallArgs).not.toHaveProperty('endpoint');
-  });test('Specified credentials should be used', () => {
+  });
+
+  test('Specified credentials should be used', () => {
     // tslint:disable-next-line:no-unused-expression
     new S3Client({ ...CLIENT_CONFIG, credentials: CLIENT_CREDENTIALS });
 
@@ -75,7 +74,9 @@ describe('Constructor', () => {
     const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
     expect(s3CallArgs).not.toHaveProperty('accessKeyId');
     expect(s3CallArgs).not.toHaveProperty('secretAccessKey');
-  });test('Signature should use version 4', () => {
+  });
+
+  test('Signature should use version 4', () => {
     // tslint:disable-next-line:no-unused-expression
     new S3Client(CLIENT_CONFIG);
 
@@ -143,20 +144,18 @@ describe('Constructor', () => {
 });
 
 describe('listObjectKeys', () => {
-  const PREFIX = 'prefix/';
-
-  test('Filter criteria should be honored', async () => {
-    await asyncIterableToArray(CLIENT.listObjectKeys(PREFIX, BUCKET));
+  test('Prefix and bucket should be honored', async () => {
+    await asyncIterableToArray(CLIENT.listObjectKeys(OBJECT_PREFIX, BUCKET));
 
     expect(mockS3Client.listObjectsV2).toBeCalledTimes(1);
     expect(mockS3Client.listObjectsV2).toBeCalledWith({
       Bucket: BUCKET,
-      Prefix: PREFIX,
+      Prefix: OBJECT_PREFIX,
     });
   });
 
   test('Keys for objects matching criteria should be yielded', async () => {
-    const objectKeys: readonly string[] = [`${PREFIX}logo.png`, `${PREFIX}logo.gif`];
+    const objectKeys: readonly string[] = [OBJECT1_KEY, OBJECT2_KEY];
     mockS3Client.listObjectsV2.mockReturnValue({
       promise: () =>
         Promise.resolve({
@@ -165,13 +164,13 @@ describe('listObjectKeys', () => {
         }),
     });
 
-    const retrievedKeys = await asyncIterableToArray(CLIENT.listObjectKeys(PREFIX, BUCKET));
+    const retrievedKeys = await asyncIterableToArray(CLIENT.listObjectKeys(OBJECT_PREFIX, BUCKET));
 
     expect(retrievedKeys).toEqual(objectKeys);
   });
 
   test('Pagination should be handled seamlessly', async () => {
-    const objectKeys1: readonly string[] = [`${PREFIX}logo.png`, `${PREFIX}logo.gif`];
+    const objectKeys1: readonly string[] = [OBJECT1_KEY, OBJECT2_KEY];
     const continuationToken = 'continue==';
     mockS3Client.listObjectsV2.mockReturnValueOnce({
       promise: () =>
@@ -181,7 +180,10 @@ describe('listObjectKeys', () => {
           NextContinuationToken: continuationToken,
         }),
     });
-    const objectKeys2: readonly string[] = [`${PREFIX}style.css`, `${PREFIX}mobile.css`];
+    const objectKeys2: readonly string[] = [
+      `${OBJECT_PREFIX}style.css`,
+      `${OBJECT_PREFIX}mobile.css`,
+    ];
     mockS3Client.listObjectsV2.mockReturnValueOnce({
       promise: () =>
         Promise.resolve({
@@ -190,7 +192,7 @@ describe('listObjectKeys', () => {
         }),
     });
 
-    const retrievedKeys = await asyncIterableToArray(CLIENT.listObjectKeys(PREFIX, BUCKET));
+    const retrievedKeys = await asyncIterableToArray(CLIENT.listObjectKeys(OBJECT_PREFIX, BUCKET));
 
     expect(retrievedKeys).toEqual([...objectKeys1, ...objectKeys2]);
 
@@ -198,19 +200,19 @@ describe('listObjectKeys', () => {
     expect(mockS3Client.listObjectsV2).toBeCalledWith({
       Bucket: BUCKET,
       ContinuationToken: continuationToken,
-      Prefix: PREFIX,
+      Prefix: OBJECT_PREFIX,
     });
   });
 });
 
 describe('getObject', () => {
   test('Object should be retrieved with the specified parameters', async () => {
-    await CLIENT.getObject(OBJECT_KEY, BUCKET);
+    await CLIENT.getObject(OBJECT1_KEY, BUCKET);
 
     expect(mockS3Client.getObject).toBeCalledTimes(1);
     expect(mockS3Client.getObject).toBeCalledWith({
       Bucket: BUCKET,
-      Key: OBJECT_KEY,
+      Key: OBJECT1_KEY,
     });
   });
 
@@ -223,7 +225,7 @@ describe('getObject', () => {
         }),
     });
 
-    const object = await CLIENT.getObject(OBJECT_KEY, BUCKET);
+    const object = await CLIENT.getObject(OBJECT1_KEY, BUCKET);
 
     expect(object).toHaveProperty('body', OBJECT.body);
     expect(object).toHaveProperty('metadata', OBJECT.metadata);
@@ -237,7 +239,7 @@ describe('getObject', () => {
         }),
     });
 
-    const object = await CLIENT.getObject(OBJECT_KEY, BUCKET);
+    const object = await CLIENT.getObject(OBJECT1_KEY, BUCKET);
 
     expect(object).toHaveProperty('body', OBJECT.body);
     expect(object).toHaveProperty('metadata', {});
@@ -246,13 +248,13 @@ describe('getObject', () => {
 
 describe('putObject', () => {
   test('Object should be created with specified parameters', async () => {
-    await CLIENT.putObject(OBJECT, OBJECT_KEY, BUCKET);
+    await CLIENT.putObject(OBJECT, OBJECT1_KEY, BUCKET);
 
     expect(mockS3Client.putObject).toBeCalledTimes(1);
     expect(mockS3Client.putObject).toBeCalledWith({
       Body: OBJECT.body,
       Bucket: BUCKET,
-      Key: OBJECT_KEY,
+      Key: OBJECT1_KEY,
       Metadata: OBJECT.metadata,
     });
   });
@@ -260,12 +262,12 @@ describe('putObject', () => {
 
 describe('deleteObject', () => {
   test('Specified object should be deleted', async () => {
-    await CLIENT.deleteObject(OBJECT_KEY, BUCKET);
+    await CLIENT.deleteObject(OBJECT1_KEY, BUCKET);
 
     expect(mockS3Client.deleteObject).toBeCalledTimes(1);
     expect(mockS3Client.deleteObject).toBeCalledWith({
       Bucket: BUCKET,
-      Key: OBJECT_KEY,
+      Key: OBJECT1_KEY,
     });
   });
 });
