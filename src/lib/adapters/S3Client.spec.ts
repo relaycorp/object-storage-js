@@ -4,9 +4,10 @@ import * as https from 'https';
 import {
   ACCESS_KEY,
   asyncIterableToArray,
+  CLIENT_CONFIG,
+  CLIENT_CREDENTIALS,
   ENDPOINT,
   getMockContext,
-  HMAC_KEY_CONFIG,
   mockSpy,
   SECRET_ACCESS_KEY,
 } from '../_test_utils';
@@ -28,12 +29,12 @@ const BUCKET = 'the-bucket';
 const OBJECT_KEY = 'the-object.txt';
 const OBJECT: StoreObject = { body: Buffer.from('the-body'), metadata: { foo: 'bar' } };
 
-const CLIENT = new S3Client(HMAC_KEY_CONFIG);
+const CLIENT = new S3Client(CLIENT_CONFIG);
 
 describe('Constructor', () => {
   test('Specified endpoint should be used', () => {
     // tslint:disable-next-line:no-unused-expression
-    new S3Client(HMAC_KEY_CONFIG);
+    new S3Client(CLIENT_CONFIG);
 
     expect(AWS.S3).toBeCalledTimes(1);
 
@@ -43,7 +44,7 @@ describe('Constructor', () => {
 
   test('Specified credentials should be used', () => {
     // tslint:disable-next-line:no-unused-expression
-    new S3Client(HMAC_KEY_CONFIG);
+    new S3Client({ ...CLIENT_CONFIG, credentials: CLIENT_CREDENTIALS });
 
     expect(AWS.S3).toBeCalledTimes(1);
 
@@ -52,9 +53,20 @@ describe('Constructor', () => {
     expect(s3CallArgs).toHaveProperty('secretAccessKey', SECRET_ACCESS_KEY);
   });
 
+  test('Credentials should be skipped if unspecified', () => {
+    // tslint:disable-next-line:no-unused-expression
+    new S3Client(CLIENT_CONFIG);
+
+    expect(AWS.S3).toBeCalledTimes(1);
+
+    const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
+    expect(s3CallArgs).not.toHaveProperty('accessKeyId');
+    expect(s3CallArgs).not.toHaveProperty('secretAccessKey');
+  });
+
   test('Signature should use version 4', () => {
     // tslint:disable-next-line:no-unused-expression
-    new S3Client(HMAC_KEY_CONFIG);
+    new S3Client(CLIENT_CONFIG);
 
     expect(AWS.S3).toBeCalledTimes(1);
 
@@ -64,7 +76,7 @@ describe('Constructor', () => {
 
   test('s3ForcePathStyle should be enabled', () => {
     // tslint:disable-next-line:no-unused-expression
-    new S3Client(HMAC_KEY_CONFIG);
+    new S3Client(CLIENT_CONFIG);
 
     expect(AWS.S3).toBeCalledTimes(1);
 
@@ -74,7 +86,7 @@ describe('Constructor', () => {
 
   test('TSL should be enabled if requested', () => {
     // tslint:disable-next-line:no-unused-expression
-    new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: true });
+    new S3Client({ ...CLIENT_CONFIG, tlsEnabled: true });
 
     expect(AWS.S3).toBeCalledTimes(1);
 
@@ -84,7 +96,7 @@ describe('Constructor', () => {
 
   test('TSL may be disabled if requested', () => {
     // tslint:disable-next-line:no-unused-expression
-    new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: false });
+    new S3Client({ ...CLIENT_CONFIG, tlsEnabled: false });
 
     expect(AWS.S3).toBeCalledTimes(1);
 
@@ -95,7 +107,7 @@ describe('Constructor', () => {
   describe('HTTP(S) agent', () => {
     test('HTTP agent with Keep-Alive should be used when TSL is disabled', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: false });
+      new S3Client({ ...CLIENT_CONFIG, tlsEnabled: false });
 
       expect(AWS.S3).toBeCalledTimes(1);
 
@@ -107,7 +119,7 @@ describe('Constructor', () => {
 
     test('HTTPS agent with Keep-Alive should be used when TSL is enabled', () => {
       // tslint:disable-next-line:no-unused-expression
-      new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: true });
+      new S3Client({ ...CLIENT_CONFIG, tlsEnabled: true });
 
       expect(AWS.S3).toBeCalledTimes(1);
 

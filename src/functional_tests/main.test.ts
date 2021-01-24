@@ -4,7 +4,7 @@ import { Client as MinioClient } from 'minio';
 
 import { asyncIterableToArray } from '../lib/_test_utils';
 import { AdapterType } from '../lib/adapters';
-import { initObjectStoreClientWithHMACKeys } from '../lib/constructors';
+import { initObjectStoreClient } from '../lib/init';
 import { StoreObject } from '../lib/StoreObject';
 
 loadDotEnvVars();
@@ -32,7 +32,7 @@ test('Minio', async () => {
 });
 
 async function testClient(adapterType: AdapterType, endpoint: string): Promise<void> {
-  const client = initObjectStoreClientWithHMACKeys(
+  const client = initObjectStoreClient(
     adapterType,
     endpoint,
     OBJECT_STORE_ACCESS_KEY_ID,
