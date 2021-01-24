@@ -6,7 +6,7 @@ import { ObjectStorageError } from './ObjectStorageError';
 
 jest.mock('./adapters/S3Client');
 
-describe('initObjectStoreClientWithHMACKeys', () => {
+describe('initObjectStoreClient', () => {
   test('An invalid type should be refused', () => {
     const invalidType = 'foo';
     expect(() =>
@@ -29,7 +29,17 @@ describe('initObjectStoreClientWithHMACKeys', () => {
     },
   );
 
-  test('Credentials should be used if set', () => {
+  test('Endpoint should be unset if absent', () => {
+    initObjectStoreClient('s3');
+
+    expect(S3Client).toBeCalledWith(
+      expect.not.objectContaining({
+        endpoint: expect.anything(),
+      }),
+    );
+  });
+
+  test('Credentials should be set if passed', () => {
     initObjectStoreClient('s3', ENDPOINT, ACCESS_KEY, SECRET_ACCESS_KEY);
 
     expect(S3Client).toBeCalledWith(

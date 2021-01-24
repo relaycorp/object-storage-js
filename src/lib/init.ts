@@ -20,7 +20,7 @@ const CONSTRUCTORS: { readonly [key: string]: clientConstructor } = Object.entri
  */
 export function initObjectStoreClient(
   type: AdapterType,
-  endpoint: string,
+  endpoint?: string,
   accessKeyId?: string,
   secretAccessKey?: string,
   tlsEnabled = true,
