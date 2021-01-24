@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  minio:
+    image: minio/minio:RELEASE.2021-01-16T02-19-44Z
+    init: true
+    command: ["server", "/data"]
+    environment:
+      MINIO_ACCESS_KEY: ${OBJECT_STORE_ACCESS_KEY_ID}
+      MINIO_SECRET_KEY: ${OBJECT_STORE_SECRET_KEY}
+      MINIO_API_READY_DEADLINE: 5s
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:9000/minio/health/ready"]
+    ports:
+      - '127.0.0.1:9000:9000'

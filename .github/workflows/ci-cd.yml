@@ -25,6 +25,7 @@ jobs:
       - run: npm ci
       - run: npm run static-checks
       - run: test:ci:unit
+      - run: test:functional
 
   release:
     needs: ci
