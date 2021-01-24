@@ -39,7 +39,9 @@ export class GCSClient implements ObjectStoreClient {
     } while (query !== null);
   }
 
-  public async putObject(_object: StoreObject, _key: string, _bucket: string): Promise<void> {
-    throw new Error();
+  public async putObject(object: StoreObject, key: string, bucket: string): Promise<void> {
+    const file = this.client.bucket(bucket).file(key);
+    await file.save(object.body);
+    await file.setMetadata(object.metadata);
   }
 }

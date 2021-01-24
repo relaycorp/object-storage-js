@@ -2,10 +2,22 @@ import { Storage } from '@google-cloud/storage';
 
 import { asyncIterableToArray, CLIENT_CREDENTIALS, ENDPOINT, mockSpy } from '../_test_utils';
 import { ObjectStorageError } from '../ObjectStorageError';
-import { BUCKET, CLIENT_CONFIG, OBJECT1_KEY, OBJECT2_KEY, OBJECT_PREFIX } from './_test_utils';
+import {
+  BUCKET,
+  CLIENT_CONFIG,
+  OBJECT,
+  OBJECT1_KEY,
+  OBJECT2_KEY,
+  OBJECT_PREFIX,
+} from './_test_utils';
 import { GCSClient } from './GCSClient';
 
+const mockFile = {
+  save: mockSpy(jest.fn()),
+  setMetadata: mockSpy(jest.fn()),
+};
 const mockBucket = {
+  file: mockSpy(jest.fn(), () => mockFile),
   getFiles: mockSpy(jest.fn(), () => Promise.resolve([[], null])),
 };
 const mockStorage = {
@@ -99,5 +111,15 @@ describe('listObjectKeys', () => {
 
     expect(mockBucket.getFiles).nthCalledWith(1, expect.objectContaining({ autoPaginate: false }));
     expect(mockBucket.getFiles).nthCalledWith(2, page2Query);
+  });
+});
+
+describe('putObject', () => {
+  test('Object should be created with specified parameters', async () => {
+    await CLIENT.putObject(OBJECT, OBJECT1_KEY, BUCKET);
+
+    expect(mockBucket.file).toBeCalledWith(OBJECT1_KEY);
+    expect(mockFile.save).toBeCalledWith(OBJECT.body);
+    expect(mockFile.setMetadata).toBeCalledWith(OBJECT.metadata);
   });
 });
