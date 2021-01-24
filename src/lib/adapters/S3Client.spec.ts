@@ -31,92 +31,90 @@ const OBJECT: StoreObject = { body: Buffer.from('the-body'), metadata: { foo: 'b
 const CLIENT = new S3Client(HMAC_KEY_CONFIG);
 
 describe('Constructor', () => {
-  describe('Client', () => {
-    test('Specified endpoint should be used', () => {
-      // tslint:disable-next-line:no-unused-expression
-      new S3Client(HMAC_KEY_CONFIG);
+  test('Specified endpoint should be used', () => {
+    // tslint:disable-next-line:no-unused-expression
+    new S3Client(HMAC_KEY_CONFIG);
 
-      expect(AWS.S3).toBeCalledTimes(1);
+    expect(AWS.S3).toBeCalledTimes(1);
 
-      const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
-      expect(s3CallArgs).toHaveProperty('endpoint', ENDPOINT);
-    });
+    const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
+    expect(s3CallArgs).toHaveProperty('endpoint', ENDPOINT);
+  });
 
-    test('Specified credentials should be used', () => {
-      // tslint:disable-next-line:no-unused-expression
-      new S3Client(HMAC_KEY_CONFIG);
+  test('Specified credentials should be used', () => {
+    // tslint:disable-next-line:no-unused-expression
+    new S3Client(HMAC_KEY_CONFIG);
 
-      expect(AWS.S3).toBeCalledTimes(1);
+    expect(AWS.S3).toBeCalledTimes(1);
 
-      const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
-      expect(s3CallArgs).toHaveProperty('accessKeyId', ACCESS_KEY);
-      expect(s3CallArgs).toHaveProperty('secretAccessKey', SECRET_ACCESS_KEY);
-    });
+    const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
+    expect(s3CallArgs).toHaveProperty('accessKeyId', ACCESS_KEY);
+    expect(s3CallArgs).toHaveProperty('secretAccessKey', SECRET_ACCESS_KEY);
+  });
 
-    test('Signature should use version 4', () => {
-      // tslint:disable-next-line:no-unused-expression
-      new S3Client(HMAC_KEY_CONFIG);
+  test('Signature should use version 4', () => {
+    // tslint:disable-next-line:no-unused-expression
+    new S3Client(HMAC_KEY_CONFIG);
 
-      expect(AWS.S3).toBeCalledTimes(1);
+    expect(AWS.S3).toBeCalledTimes(1);
 
-      const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
-      expect(s3CallArgs).toHaveProperty('signatureVersion', 'v4');
-    });
+    const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
+    expect(s3CallArgs).toHaveProperty('signatureVersion', 'v4');
+  });
 
-    test('s3ForcePathStyle should be enabled', () => {
-      // tslint:disable-next-line:no-unused-expression
-      new S3Client(HMAC_KEY_CONFIG);
+  test('s3ForcePathStyle should be enabled', () => {
+    // tslint:disable-next-line:no-unused-expression
+    new S3Client(HMAC_KEY_CONFIG);
 
-      expect(AWS.S3).toBeCalledTimes(1);
+    expect(AWS.S3).toBeCalledTimes(1);
 
-      const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
-      expect(s3CallArgs).toHaveProperty('s3ForcePathStyle', true);
-    });
+    const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
+    expect(s3CallArgs).toHaveProperty('s3ForcePathStyle', true);
+  });
 
-    test('TSL should be enabled if requested', () => {
-      // tslint:disable-next-line:no-unused-expression
-      new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: true });
+  test('TSL should be enabled if requested', () => {
+    // tslint:disable-next-line:no-unused-expression
+    new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: true });
 
-      expect(AWS.S3).toBeCalledTimes(1);
+    expect(AWS.S3).toBeCalledTimes(1);
 
-      const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
-      expect(s3CallArgs).toHaveProperty('sslEnabled', true);
-    });
+    const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
+    expect(s3CallArgs).toHaveProperty('sslEnabled', true);
+  });
 
-    test('TSL may be disabled if requested', () => {
+  test('TSL may be disabled if requested', () => {
+    // tslint:disable-next-line:no-unused-expression
+    new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: false });
+
+    expect(AWS.S3).toBeCalledTimes(1);
+
+    const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
+    expect(s3CallArgs).toHaveProperty('sslEnabled', false);
+  });
+
+  describe('HTTP(S) agent', () => {
+    test('HTTP agent with Keep-Alive should be used when TSL is disabled', () => {
       // tslint:disable-next-line:no-unused-expression
       new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: false });
 
       expect(AWS.S3).toBeCalledTimes(1);
 
       const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
-      expect(s3CallArgs).toHaveProperty('sslEnabled', false);
+      const agent = s3CallArgs.httpOptions.agent;
+      expect(agent).toBeInstanceOf(http.Agent);
+      expect(agent).toHaveProperty('keepAlive', true);
     });
 
-    describe('HTTP(S) agent', () => {
-      test('HTTP agent with Keep-Alive should be used when TSL is disabled', () => {
-        // tslint:disable-next-line:no-unused-expression
-        new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: false });
+    test('HTTPS agent with Keep-Alive should be used when TSL is enabled', () => {
+      // tslint:disable-next-line:no-unused-expression
+      new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: true });
 
-        expect(AWS.S3).toBeCalledTimes(1);
+      expect(AWS.S3).toBeCalledTimes(1);
 
-        const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
-        const agent = s3CallArgs.httpOptions.agent;
-        expect(agent).toBeInstanceOf(http.Agent);
-        expect(agent).toHaveProperty('keepAlive', true);
-      });
-
-      test('HTTPS agent with Keep-Alive should be used when TSL is enabled', () => {
-        // tslint:disable-next-line:no-unused-expression
-        new S3Client({ ...HMAC_KEY_CONFIG, tlsEnabled: true });
-
-        expect(AWS.S3).toBeCalledTimes(1);
-
-        const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
-        const agent = s3CallArgs.httpOptions.agent;
-        expect(agent).toBeInstanceOf(https.Agent);
-        expect(agent).toHaveProperty('keepAlive', true);
-      });
+      const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
+      const agent = s3CallArgs.httpOptions.agent;
+      expect(agent).toBeInstanceOf(https.Agent);
+      expect(agent).toHaveProperty('keepAlive', true);
     });
   });
 });
