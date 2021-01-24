@@ -42,6 +42,16 @@ describe('Constructor', () => {
     expect(s3CallArgs).toHaveProperty('endpoint', ENDPOINT);
   });
 
+  test('Endpoint should be skipped if unspecified', () => {
+    // tslint:disable-next-line:no-unused-expression
+    new S3Client({ tlsEnabled: true });
+
+    expect(AWS.S3).toBeCalledTimes(1);
+
+    const s3CallArgs = getMockContext(AWS.S3).calls[0][0];
+    expect(s3CallArgs).not.toHaveProperty('endpoint');
+  });
+
   test('Specified credentials should be used', () => {
     // tslint:disable-next-line:no-unused-expression
     new S3Client({ ...CLIENT_CONFIG, credentials: CLIENT_CREDENTIALS });

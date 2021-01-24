@@ -16,13 +16,16 @@ export class S3Client implements ObjectStoreClient {
     const agentOptions = { keepAlive: true };
     const agent = config.tlsEnabled ? new https.Agent(agentOptions) : new http.Agent(agentOptions);
     const options = {
-      endpoint: config.endpoint,
       httpOptions: { agent },
       s3ForcePathStyle: true,
       signatureVersion: 'v4',
       sslEnabled: config.tlsEnabled,
     };
-    this.client = new S3({ ...options, ...(config.credentials && config.credentials) });
+    this.client = new S3({
+      ...options,
+      ...(config.credentials && config.credentials),
+      ...(config.endpoint && { endpoint: config.endpoint }),
+    });
   }
 
   public async getObject(key: string, bucket: string): Promise<StoreObject> {

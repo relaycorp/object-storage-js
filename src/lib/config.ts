@@ -1,7 +1,7 @@
 export interface ClientConfig {
-  readonly endpoint: string;
-  readonly tlsEnabled: boolean;
   readonly credentials?: ClientCredentials;
+  readonly endpoint?: string;
+  readonly tlsEnabled: boolean;
 }
 
 export interface ClientCredentials {
