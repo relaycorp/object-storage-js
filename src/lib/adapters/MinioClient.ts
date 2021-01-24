@@ -7,6 +7,9 @@ export class MinioClient extends S3Client {
     if (!config.endpoint) {
       throw new ObjectStorageError('The Minio adapter requires an endpoint');
     }
+    if (!config.credentials) {
+      throw new ObjectStorageError('The Minio adapter requires credentials');
+    }
     super(config);
   }
 }

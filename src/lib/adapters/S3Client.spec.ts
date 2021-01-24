@@ -4,13 +4,13 @@ import * as https from 'https';
 import {
   ACCESS_KEY,
   asyncIterableToArray,
-  CLIENT_CONFIG,
   CLIENT_CREDENTIALS,
   ENDPOINT,
   getMockContext,
   mockSpy,
   SECRET_ACCESS_KEY,
 } from '../_test_utils';
+import { ClientConfig } from '../config';
 import { StoreObject } from '../StoreObject';
 
 const mockS3Client = {
@@ -28,6 +28,11 @@ import { S3Client } from './S3Client';
 const BUCKET = 'the-bucket';
 const OBJECT_KEY = 'the-object.txt';
 const OBJECT: StoreObject = { body: Buffer.from('the-body'), metadata: { foo: 'bar' } };
+
+const CLIENT_CONFIG: ClientConfig = {
+  endpoint: ENDPOINT,
+  tlsEnabled: true,
+};
 
 const CLIENT = new S3Client(CLIENT_CONFIG);
 

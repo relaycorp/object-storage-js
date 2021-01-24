@@ -14,15 +14,23 @@ describe('initObjectStoreClient', () => {
     ).toThrowError(new ObjectStorageError(`Unknown client type "${invalidType}"`));
   });
 
-  test.each([Object.getOwnPropertyNames(CLIENT_BY_ADAPTER_NAME)])(
+  test.each(Object.getOwnPropertyNames(CLIENT_BY_ADAPTER_NAME))(
     '%s client should be returned if requested',
     (adapterName) => {
-      const client = initObjectStoreClient(adapterName as any, ENDPOINT);
+      const client = initObjectStoreClient(
+        adapterName as any,
+        ENDPOINT,
+        ACCESS_KEY,
+        SECRET_ACCESS_KEY,
+      );
 
       const expectedClientClass = CLIENT_BY_ADAPTER_NAME[adapterName as AdapterType];
       expect(client).toBeInstanceOf(expectedClientClass);
       expect(expectedClientClass).toBeCalledWith({
-        credentials: undefined,
+        credentials: {
+          accessKeyId: ACCESS_KEY,
+          secretAccessKey: SECRET_ACCESS_KEY,
+        },
         endpoint: ENDPOINT,
         tlsEnabled: true,
       });
@@ -39,15 +47,12 @@ describe('initObjectStoreClient', () => {
     );
   });
 
-  test('Credentials should be set if passed', () => {
-    initObjectStoreClient('s3', ENDPOINT, ACCESS_KEY, SECRET_ACCESS_KEY);
+  test('Credentials should be unset if absent', () => {
+    initObjectStoreClient('s3');
 
     expect(S3Client).toBeCalledWith(
-      expect.objectContaining({
-        credentials: {
-          accessKeyId: ACCESS_KEY,
-          secretAccessKey: SECRET_ACCESS_KEY,
-        },
+      expect.not.objectContaining({
+        credentials: expect.anything(),
       }),
     );
   });
