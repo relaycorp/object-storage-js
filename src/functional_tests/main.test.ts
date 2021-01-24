@@ -1,14 +1,13 @@
 import { config as loadDotEnvVars } from 'dotenv';
 import { get as getEnvVar } from 'env-var';
 import { Client as MinioClient } from 'minio';
-import { dirname, join } from 'path';
 
 import { asyncIterableToArray } from '../lib/_test_utils';
 import { AdapterType } from '../lib/adapters';
 import { initObjectStoreClientWithHMACKeys } from '../lib/constructors';
 import { StoreObject } from '../lib/StoreObject';
 
-loadDotEnvVars({ path: join(dirname(__filename), '.env') });
+loadDotEnvVars();
 
 const OBJECT_STORE_HOST = '127.0.0.1';
 const OBJECT_STORE_BUCKET = getEnvVar('OBJECT_STORE_BUCKET').required().asString();

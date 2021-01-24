@@ -4,10 +4,10 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-cd "$(dirname "${BASH_SOURCE[0]}")"
+CURRENT_DIR="$(dirname "${BASH_SOURCE[0]}")"
 
 export COMPOSE_PROJECT_NAME='object-storage-functional-tests'
-export COMPOSE_FILE='docker-compose.yml'
+export COMPOSE_FILE="${CURRENT_DIR}/docker-compose.yml"
 
 trap "docker-compose down --remove-orphans" INT TERM EXIT
 
@@ -17,5 +17,4 @@ docker-compose build
 docker-compose up  --force-recreate  --detach
 sleep 3s
 
-cd -
 exec jest --config jest.config.functional.js --runInBand --detectOpenHandles
