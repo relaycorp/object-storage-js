@@ -65,4 +65,9 @@ async function testClient(
   ).resolves.toEqual([`/${OBJECT1_KEY}`]);
 
   await expect(client.getObject(OBJECT1_KEY, OBJECT_STORE_BUCKET)).resolves.toEqual(OBJECT);
+
+  await expect(client.deleteObject(OBJECT1_KEY, OBJECT_STORE_BUCKET)).toResolve();
+  await expect(
+    asyncIterableToArray(client.listObjectKeys('/', OBJECT_STORE_BUCKET)),
+  ).resolves.toHaveLength(0);
 }
