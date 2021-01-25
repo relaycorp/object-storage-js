@@ -7,7 +7,7 @@ import { ObjectStorageError } from './ObjectStorageError';
 jest.mock('./adapters/S3Client');
 jest.mock('./adapters/GCSClient');
 
-const adaptersWithoutCredentialsSupport: readonly AdapterType[] = ['gcs'];
+const ADAPTERS_WITHOUT_CREDENTIALS_SUPPORT: readonly AdapterType[] = ['gcs'];
 
 describe('initObjectStoreClient', () => {
   test('An invalid type should be refused', () => {
@@ -20,7 +20,7 @@ describe('initObjectStoreClient', () => {
   test.each(Object.getOwnPropertyNames(CLIENT_BY_ADAPTER_NAME))(
     '%s client should be returned if requested',
     (adapterName) => {
-      const passCredentials = !adaptersWithoutCredentialsSupport.includes(
+      const passCredentials = !ADAPTERS_WITHOUT_CREDENTIALS_SUPPORT.includes(
         adapterName as AdapterType,
       );
       const client = initObjectStoreClient(
