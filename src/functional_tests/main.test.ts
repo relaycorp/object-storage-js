@@ -5,7 +5,7 @@ import { Client as MinioClient } from 'minio';
 
 import { asyncIterableToArray } from '../lib/_test_utils';
 import { AdapterType } from '../lib/adapters';
-import { OBJECT, OBJECT1_KEY } from '../lib/adapters/_test_utils';
+import { OBJECT, OBJECT1_KEY, OBJECT_PREFIX } from '../lib/adapters/_test_utils';
 import { initObjectStoreClient } from '../lib/init';
 
 loadDotEnvVars();
@@ -54,20 +54,20 @@ async function testClient(
   );
 
   await expect(
-    asyncIterableToArray(client.listObjectKeys('/', OBJECT_STORE_BUCKET)),
+    asyncIterableToArray(client.listObjectKeys(OBJECT_PREFIX, OBJECT_STORE_BUCKET)),
   ).resolves.toHaveLength(0);
   await expect(client.getObject(OBJECT1_KEY, OBJECT_STORE_BUCKET)).rejects.not.toBeNull();
 
   await client.putObject(OBJECT, OBJECT1_KEY, OBJECT_STORE_BUCKET);
 
   await expect(
-    asyncIterableToArray(client.listObjectKeys('/', OBJECT_STORE_BUCKET)),
-  ).resolves.toEqual([`/${OBJECT1_KEY}`]);
+    asyncIterableToArray(client.listObjectKeys(OBJECT_PREFIX, OBJECT_STORE_BUCKET)),
+  ).resolves.toEqual([OBJECT1_KEY]);
 
   await expect(client.getObject(OBJECT1_KEY, OBJECT_STORE_BUCKET)).resolves.toEqual(OBJECT);
 
   await expect(client.deleteObject(OBJECT1_KEY, OBJECT_STORE_BUCKET)).toResolve();
   await expect(
-    asyncIterableToArray(client.listObjectKeys('/', OBJECT_STORE_BUCKET)),
+    asyncIterableToArray(client.listObjectKeys(OBJECT_PREFIX, OBJECT_STORE_BUCKET)),
   ).resolves.toHaveLength(0);
 }

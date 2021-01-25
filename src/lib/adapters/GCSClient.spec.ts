@@ -16,7 +16,7 @@ const mockFile: any = {
   delete: mockSpy(jest.fn()),
   download: mockSpy(jest.fn(), () => Promise.resolve([OBJECT.body])),
   get: mockSpy(jest.fn(), () => Promise.resolve([mockFile, {}])),
-  metadata: OBJECT.metadata,
+  metadata: { metadata: OBJECT.metadata },
   save: mockSpy(jest.fn()),
   setMetadata: mockSpy(jest.fn()),
 };
@@ -133,7 +133,7 @@ describe('getObject', () => {
   });
 
   test('Metadata should fall back to empty object when undefined', async () => {
-    mockFile.get.mockResolvedValue([{ download: mockFile.download }]);
+    mockFile.get.mockResolvedValue([{ download: mockFile.download, metadata: {} }]);
 
     const object = await CLIENT.getObject(OBJECT1_KEY, BUCKET);
 
@@ -148,7 +148,7 @@ describe('putObject', () => {
 
     expect(mockBucket.file).toBeCalledWith(OBJECT1_KEY);
     expect(mockFile.save).toBeCalledWith(OBJECT.body, { resumable: false });
-    expect(mockFile.setMetadata).toBeCalledWith(OBJECT.metadata);
+    expect(mockFile.setMetadata).toBeCalledWith({ metadata: OBJECT.metadata });
   });
 });
 

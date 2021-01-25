@@ -28,7 +28,7 @@ export class GCSClient implements ObjectStoreClient {
   public async getObject(key: string, bucket: string): Promise<StoreObject> {
     const [gcsFile] = await this.client.bucket(bucket).file(key).get();
     const download = await gcsFile.download();
-    return { body: download[0], metadata: gcsFile.metadata ?? {} };
+    return { body: download[0], metadata: gcsFile.metadata.metadata ?? {} };
   }
 
   public async *listObjectKeys(prefix: string, bucket: string): AsyncIterable<string> {
@@ -47,6 +47,6 @@ export class GCSClient implements ObjectStoreClient {
     await file.save(object.body, {
       resumable: false, // https://github.com/fsouza/fake-gcs-server/issues/346
     });
-    await file.setMetadata(object.metadata);
+    await file.setMetadata({ metadata: object.metadata });
   }
 }
