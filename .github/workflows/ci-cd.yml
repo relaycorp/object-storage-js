@@ -56,12 +56,8 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
       - name: Publish documentation
-        uses: peaceiris/actions-gh-pages@v2.10.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./build/docs
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          emptyCommits: false
-          commitMessage: "${{ github.event.head_commit.message }} [skip ci]"
-
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/docs
+          allow_empty_commit: true
