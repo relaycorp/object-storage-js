@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ObjectStoreClient | @relaycorp/object-storage</title>
+	<title>@relaycorp/object-storage | @relaycorp/object-storage</title>
 	<meta name="description" content="Documentation for @relaycorp/object-storage">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style type="text/css">/*! normalize.css v1.1.3 | MIT License | git.io/normalize */
@@ -2646,7 +2646,7 @@ img {
 		<div class="container">
 			<div class="table-wrap">
 				<div class="table-cell">
-					<strong><a href="../index.html">@relaycorp/object-storage</a></strong>
+					<strong><a href="index.html">@relaycorp/object-storage</a></strong>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -2677,221 +2677,191 @@ img {
 <nav class="tsd-navigation secondary">
 	<ul>
 		<li class=" tsd-kind-class">
-			<a href="../classes/objectstorageerror.html" class="tsd-kind-icon">Object<wbr>Storage<wbr>Error</a>
-		</li>
-		<li class="current tsd-kind-interface">
-			<a href="objectstoreclient.html" class="tsd-kind-icon">Object<wbr>Store<wbr>Client</a>
-			<ul>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="objectstoreclient.html#deleteobject" class="tsd-kind-icon">delete<wbr>Object</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="objectstoreclient.html#getobject" class="tsd-kind-icon">get<wbr>Object</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="objectstoreclient.html#listobjectkeys" class="tsd-kind-icon">list<wbr>Object<wbr>Keys</a>
-				</li>
-				<li class=" tsd-kind-property tsd-parent-kind-interface">
-					<a href="objectstoreclient.html#putobject" class="tsd-kind-icon">put<wbr>Object</a>
-				</li>
-			</ul>
+			<a href="classes/objectstorageerror.html" class="tsd-kind-icon">Object<wbr>Storage<wbr>Error</a>
 		</li>
 		<li class=" tsd-kind-interface">
-			<a href="storeobject.html" class="tsd-kind-icon">Store<wbr>Object</a>
+			<a href="interfaces/objectstoreclient.html" class="tsd-kind-icon">Object<wbr>Store<wbr>Client</a>
+		</li>
+		<li class=" tsd-kind-interface">
+			<a href="interfaces/storeobject.html" class="tsd-kind-icon">Store<wbr>Object</a>
 		</li>
 		<li class=" tsd-kind-type-alias">
-			<a href="../modules.html#adaptertype" class="tsd-kind-icon">Adapter<wbr>Type</a>
+			<a href="modules.html#adaptertype" class="tsd-kind-icon">Adapter<wbr>Type</a>
 		</li>
 		<li class=" tsd-kind-function">
-			<a href="../modules.html#initobjectstoreclient" class="tsd-kind-icon">init<wbr>Object<wbr>Store<wbr>Client</a>
+			<a href="modules.html#initobjectstoreclient" class="tsd-kind-icon">init<wbr>Object<wbr>Store<wbr>Client</a>
 		</li>
 	</ul>
 </nav>
 <div class="container container-main">
 	<div class="content-wrap">
-		<section class="tsd-panel tsd-comment">
-			<div class="tsd-comment tsd-typography">
-				<div class="lead">
-					<p>Interface for all object store clients.</p>
-				</div>
-			</div>
-		</section>
-		<section class="tsd-panel tsd-hierarchy">
-			<h3>Hierarchy</h3>
-			<ul class="tsd-hierarchy">
-				<li>
-					<span class="target">ObjectStoreClient</span>
-				</li>
+		<div class="tsd-panel tsd-typography">
+			<a href="#relaycorpobject-storage" id="relaycorpobject-storage" style="color: inherit; text-decoration: none;">
+				<h1>@relaycorp/object-storage</h1>
+			</a>
+			<p>This library allows you to interact with major object storage backends (e.g., Amazon S3) using a unified interface.</p>
+			<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+				<h2>Install</h2>
+			</a>
+			<p>Releases are automatically pushed to NPM. For example, to get the latest release, run:</p>
+			<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> @</span><span style="color: #001080">relaycorp</span><span style="color: #000000">/</span><span style="color: #001080">object</span><span style="color: #000000">-</span><span style="color: #001080">storage</span>
+</code></pre>
+			<a href="#supported-backends" id="supported-backends" style="color: inherit; text-decoration: none;">
+				<h2>Supported backends</h2>
+			</a>
+			<table>
+				<thead>
+					<tr>
+						<th>Backend</th>
+						<th>Name</th>
+						<th>SDK used internally</th>
+						<th>Access/secret key support</th>
+					</tr>
+				</thead>
+				<tbody><tr>
+						<td>Amazon S3</td>
+						<td><code>s3</code></td>
+						<td>AWS</td>
+						<td>Optional</td>
+					</tr>
+					<tr>
+						<td>Google Cloud Storage (GCS)</td>
+						<td><code>gcs</code></td>
+						<td>GCP</td>
+						<td>Unsupported. Use alternative authentication methods instead, like <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity">workload identity</a>.</td>
+					</tr>
+					<tr>
+						<td>Minio</td>
+						<td><code>minio</code></td>
+						<td>AWS</td>
+						<td>Required</td>
+					</tr>
+			</tbody></table>
+			<a href="#supported-operations" id="supported-operations" style="color: inherit; text-decoration: none;">
+				<h2>Supported operations</h2>
+			</a>
+			<ul>
+				<li>Get object (along with its metadata).</li>
+				<li>Create/update object (along with its metadata).</li>
+				<li>Delete object.</li>
+				<li>List objects under a given prefix. Pagination is handled automatically: We return an iterable and retrieve the next page lazily.</li>
 			</ul>
-		</section>
+			<p>We welcome PRs to support additional operations, as long as each new operation is supported across all backends in a normalised way, and has unit and functional tests.</p>
+			<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+				<h2>Example</h2>
+			</a>
+			<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">initObjectStoreClient</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@relaycorp/object-storage&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">main</span><span style="color: #000000">(): </span><span style="color: #267F99">Promise</span><span style="color: #000000">&lt;</span><span style="color: #267F99">void</span><span style="color: #000000">&gt; {</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #795E26">initObjectStoreClient</span><span style="color: #000000">(</span>
+<span style="color: #000000">    </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">STORE_BACKEND</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">STORE_ENDPOINT</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">STORE_ACCESS_KEY</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">STORE_SECRET_KEY</span><span style="color: #000000">,</span>
+<span style="color: #000000">  );</span>
+
+<span style="color: #000000">  </span><span style="color: #AF00DB">for</span><span style="color: #000000"> </span><span style="color: #AF00DB">await</span><span style="color: #000000"> (</span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">objectKey</span><span style="color: #000000"> </span><span style="color: #0000FF">of</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">listObjectKeys</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;prefix/&quot;</span><span style="color: #000000">, </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">STORE_BUCKET</span><span style="color: #000000">)) {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;- &quot;</span><span style="color: #000000">, </span><span style="color: #001080">objectKey</span><span style="color: #000000">)</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+			<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
+				<h2>API documentation</h2>
+			</a>
+			<p>The API documentation can be found on <a href="https://docs.relaycorp.tech/object-storage-js/">docs.relaycorp.tech</a>.</p>
+			<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+				<h2>Contributing</h2>
+			</a>
+			<p>We love contributions! If you haven&#39;t contributed to a Relaycorp project before, please take a minute to <a href="https://github.com/relaycorp/.github/blob/master/CONTRIBUTING.md">read our guidelines</a> first.</p>
+		</div>
 		<section class="tsd-panel-group tsd-index-group">
 			<h2>Index</h2>
 			<section class="tsd-panel tsd-index-panel">
 				<div class="tsd-index-content">
 					<section class="tsd-index-section ">
-						<h3>Properties</h3>
+						<h3>Classes</h3>
 						<ul class="tsd-index-list">
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="objectstoreclient.html#deleteobject" class="tsd-kind-icon">delete<wbr>Object</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="objectstoreclient.html#getobject" class="tsd-kind-icon">get<wbr>Object</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="objectstoreclient.html#listobjectkeys" class="tsd-kind-icon">list<wbr>Object<wbr>Keys</a></li>
-							<li class="tsd-kind-property tsd-parent-kind-interface"><a href="objectstoreclient.html#putobject" class="tsd-kind-icon">put<wbr>Object</a></li>
+							<li class="tsd-kind-class"><a href="classes/objectstorageerror.html" class="tsd-kind-icon">Object<wbr>Storage<wbr>Error</a></li>
+						</ul>
+					</section>
+					<section class="tsd-index-section ">
+						<h3>Interfaces</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-interface"><a href="interfaces/objectstoreclient.html" class="tsd-kind-icon">Object<wbr>Store<wbr>Client</a></li>
+							<li class="tsd-kind-interface"><a href="interfaces/storeobject.html" class="tsd-kind-icon">Store<wbr>Object</a></li>
+						</ul>
+					</section>
+					<section class="tsd-index-section ">
+						<h3>Type aliases</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-type-alias"><a href="modules.html#adaptertype" class="tsd-kind-icon">Adapter<wbr>Type</a></li>
+						</ul>
+					</section>
+					<section class="tsd-index-section ">
+						<h3>Functions</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-function"><a href="modules.html#initobjectstoreclient" class="tsd-kind-icon">init<wbr>Object<wbr>Store<wbr>Client</a></li>
 						</ul>
 					</section>
 				</div>
 			</section>
 		</section>
 		<section class="tsd-panel-group tsd-member-group ">
-			<h2>Properties</h2>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="deleteobject" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> delete<wbr>Object</h3>
-				<div class="tsd-signature tsd-kind-icon">delete<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
+			<h2>Type aliases</h2>
+			<section class="tsd-panel tsd-member tsd-kind-type-alias">
+				<a name="adaptertype" class="tsd-anchor"></a>
+				<h3>Adapter<wbr>Type</h3>
+				<div class="tsd-signature tsd-kind-icon">Adapter<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;gcs&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;minio&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;s3&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/6a74b65/src/lib/ObjectStoreClient.ts#L21">src/lib/ObjectStoreClient.ts:21</a></li>
+						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/dd98ee0/src/lib/adapters/index.ts#L5">src/lib/adapters/index.ts:5</a></li>
 					</ul>
 				</aside>
-				<div class="tsd-type-declaration">
-					<h4>Type declaration</h4>
-					<ul class="tsd-parameters">
-						<li class="tsd-parameter-signature">
-							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
-							</ul>
-							<ul class="tsd-descriptions">
-								<li class="tsd-description">
-									<h4 class="tsd-parameters-title">Parameters</h4>
-									<ul class="tsd-parameters">
-										<li>
-											<h5>key: <span class="tsd-signature-type">string</span></h5>
-										</li>
-										<li>
-											<h5>bucket: <span class="tsd-signature-type">string</span></h5>
-										</li>
-									</ul>
-									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
 			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="getobject" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> get<wbr>Object</h3>
-				<div class="tsd-signature tsd-kind-icon">get<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="storeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">StoreObject</a><span class="tsd-signature-symbol">&gt;</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/6a74b65/src/lib/ObjectStoreClient.ts#L7">src/lib/ObjectStoreClient.ts:7</a></li>
-					</ul>
-				</aside>
-				<div class="tsd-type-declaration">
-					<h4>Type declaration</h4>
-					<ul class="tsd-parameters">
-						<li class="tsd-parameter-signature">
-							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="storeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">StoreObject</a><span class="tsd-signature-symbol">&gt;</span></li>
+		</section>
+		<section class="tsd-panel-group tsd-member-group ">
+			<h2>Functions</h2>
+			<section class="tsd-panel tsd-member tsd-kind-function">
+				<a name="initobjectstoreclient" class="tsd-anchor"></a>
+				<h3>init<wbr>Object<wbr>Store<wbr>Client</h3>
+				<ul class="tsd-signatures tsd-kind-function">
+					<li class="tsd-signature tsd-kind-icon">init<wbr>Object<wbr>Store<wbr>Client<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><a href="modules.html#adaptertype" class="tsd-signature-type" data-tsd-kind="Type alias">AdapterType</a>, endpoint<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, accessKeyId<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, secretAccessKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, tlsEnabled<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/objectstoreclient.html" class="tsd-signature-type" data-tsd-kind="Interface">ObjectStoreClient</a></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/dd98ee0/src/lib/init.ts#L21">src/lib/init.ts:21</a></li>
 							</ul>
-							<ul class="tsd-descriptions">
-								<li class="tsd-description">
-									<h4 class="tsd-parameters-title">Parameters</h4>
-									<ul class="tsd-parameters">
-										<li>
-											<h5>key: <span class="tsd-signature-type">string</span></h5>
-										</li>
-										<li>
-											<h5>bucket: <span class="tsd-signature-type">string</span></h5>
-										</li>
-									</ul>
-									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="storeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">StoreObject</a><span class="tsd-signature-symbol">&gt;</span></h4>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="listobjectkeys" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> list<wbr>Object<wbr>Keys</h3>
-				<div class="tsd-signature tsd-kind-icon">list<wbr>Object<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">AsyncIterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/6a74b65/src/lib/ObjectStoreClient.ts#L17">src/lib/ObjectStoreClient.ts:17</a></li>
-					</ul>
-				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Retrieve the keys for all the objects in the specified bucket with the specified key prefix.</p>
-					</div>
-					<p>This will handle pagination if the backend supports it (S3 does, Minio doesn&#39;t).</p>
-					<dl class="tsd-comment-tags">
-						<dt>param</dt>
-						<dd></dd>
-						<dt>param</dt>
-						<dd></dd>
-					</dl>
-				</div>
-				<div class="tsd-type-declaration">
-					<h4>Type declaration</h4>
-					<ul class="tsd-parameters">
-						<li class="tsd-parameter-signature">
-							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AsyncIterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
-							</ul>
-							<ul class="tsd-descriptions">
-								<li class="tsd-description">
-									<h4 class="tsd-parameters-title">Parameters</h4>
-									<ul class="tsd-parameters">
-										<li>
-											<h5>prefix: <span class="tsd-signature-type">string</span></h5>
-										</li>
-										<li>
-											<h5>bucket: <span class="tsd-signature-type">string</span></h5>
-										</li>
-									</ul>
-									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AsyncIterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-				<a name="putobject" class="tsd-anchor"></a>
-				<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> put<wbr>Object</h3>
-				<div class="tsd-signature tsd-kind-icon">put<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><a href="storeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">StoreObject</a>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
-				<aside class="tsd-sources">
-					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/6a74b65/src/lib/ObjectStoreClient.ts#L19">src/lib/ObjectStoreClient.ts:19</a></li>
-					</ul>
-				</aside>
-				<div class="tsd-type-declaration">
-					<h4>Type declaration</h4>
-					<ul class="tsd-parameters">
-						<li class="tsd-parameter-signature">
-							<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-								<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><a href="storeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">StoreObject</a>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
-							</ul>
-							<ul class="tsd-descriptions">
-								<li class="tsd-description">
-									<h4 class="tsd-parameters-title">Parameters</h4>
-									<ul class="tsd-parameters">
-										<li>
-											<h5>object: <a href="storeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">StoreObject</a></h5>
-										</li>
-										<li>
-											<h5>key: <span class="tsd-signature-type">string</span></h5>
-										</li>
-										<li>
-											<h5>bucket: <span class="tsd-signature-type">string</span></h5>
-										</li>
-									</ul>
-									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>Return object store client for the specified <code>type</code>.</p>
+							</div>
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>type: <a href="modules.html#adaptertype" class="tsd-signature-type" data-tsd-kind="Type alias">AdapterType</a></h5>
+							</li>
+							<li>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> endpoint: <span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> accessKeyId: <span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> secretAccessKey: <span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li>
+								<h5>tlsEnabled: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></h5>
+								<div class="tsd-comment tsd-typography">
+								</div>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="interfaces/objectstoreclient.html" class="tsd-signature-type" data-tsd-kind="Interface">ObjectStoreClient</a></h4>
+					</li>
+				</ul>
 			</section>
 		</section>
 		<footer class="with-border-bottom">
