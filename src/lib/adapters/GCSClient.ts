@@ -20,8 +20,9 @@ export class GCSClient implements ObjectStoreClient {
     this.client = new Storage({ ...(apiEndpoint && { apiEndpoint }) });
   }
 
-  public async deleteObject(_key: string, _bucket: string): Promise<void> {
-    throw new Error();
+  public async deleteObject(key: string, bucket: string): Promise<void> {
+    const file = this.client.bucket(bucket).file(key);
+    await file.delete();
   }
 
   public async getObject(key: string, bucket: string): Promise<StoreObject> {

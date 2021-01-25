@@ -13,6 +13,7 @@ import {
 import { GCSClient } from './GCSClient';
 
 const mockFile: any = {
+  delete: mockSpy(jest.fn()),
   download: mockSpy(jest.fn(), () => Promise.resolve([OBJECT.body])),
   get: mockSpy(jest.fn(), () => Promise.resolve([mockFile, {}])),
   metadata: OBJECT.metadata,
@@ -148,5 +149,14 @@ describe('putObject', () => {
     expect(mockBucket.file).toBeCalledWith(OBJECT1_KEY);
     expect(mockFile.save).toBeCalledWith(OBJECT.body);
     expect(mockFile.setMetadata).toBeCalledWith(OBJECT.metadata);
+  });
+});
+
+describe('deleteObject', () => {
+  test('Specified object should be deleted', async () => {
+    await CLIENT.deleteObject(OBJECT1_KEY, BUCKET);
+
+    expect(mockBucket.file).toBeCalledWith(OBJECT1_KEY);
+    expect(mockFile.delete).toBeCalledWith();
   });
 });
