@@ -12,7 +12,10 @@ import {
 } from './_test_utils';
 import { GCSClient } from './GCSClient';
 
-const mockFile = {
+const mockFile: any = {
+  download: mockSpy(jest.fn(), () => Promise.resolve([OBJECT.body])),
+  get: mockSpy(jest.fn(), () => Promise.resolve([mockFile, {}])),
+  metadata: OBJECT.metadata,
   save: mockSpy(jest.fn()),
   setMetadata: mockSpy(jest.fn()),
 };
@@ -111,6 +114,30 @@ describe('listObjectKeys', () => {
 
     expect(mockBucket.getFiles).nthCalledWith(1, expect.objectContaining({ autoPaginate: false }));
     expect(mockBucket.getFiles).nthCalledWith(2, page2Query);
+  });
+});
+
+describe('getObject', () => {
+  test('Object should be retrieved with the specified key', async () => {
+    await CLIENT.getObject(OBJECT1_KEY, BUCKET);
+
+    expect(mockBucket.file).toBeCalledWith(OBJECT1_KEY);
+  });
+
+  test('Body and metadata should be output', async () => {
+    const object = await CLIENT.getObject(OBJECT1_KEY, BUCKET);
+
+    expect(object).toHaveProperty('body', OBJECT.body);
+    expect(object).toHaveProperty('metadata', OBJECT.metadata);
+  });
+
+  test('Metadata should fall back to empty object when undefined', async () => {
+    mockFile.get.mockResolvedValue([{ download: mockFile.download }]);
+
+    const object = await CLIENT.getObject(OBJECT1_KEY, BUCKET);
+
+    expect(object).toHaveProperty('body', OBJECT.body);
+    expect(object).toHaveProperty('metadata', {});
   });
 });
 

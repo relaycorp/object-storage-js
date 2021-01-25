@@ -24,8 +24,10 @@ export class GCSClient implements ObjectStoreClient {
     throw new Error();
   }
 
-  public async getObject(_key: string, _bucket: string): Promise<StoreObject> {
-    throw new Error();
+  public async getObject(key: string, bucket: string): Promise<StoreObject> {
+    const [gcsFile] = await this.client.bucket(bucket).file(key).get();
+    const download = await gcsFile.download();
+    return { body: download[0], metadata: gcsFile.metadata ?? {} };
   }
 
   public async *listObjectKeys(prefix: string, bucket: string): AsyncIterable<string> {
