@@ -14,7 +14,9 @@
   "homepage": "https://docs.relaycorp.tech/object-storage-js/",
   "license": "MIT",
   "keywords": [
-    "relaynet"
+    "gcs",
+    "minio",
+    "s3"
   ],
   "scripts": {
     "build": "run-s clean && run-p build:*",
