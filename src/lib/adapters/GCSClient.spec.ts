@@ -147,7 +147,7 @@ describe('putObject', () => {
     await CLIENT.putObject(OBJECT, OBJECT1_KEY, BUCKET);
 
     expect(mockBucket.file).toBeCalledWith(OBJECT1_KEY);
-    expect(mockFile.save).toBeCalledWith(OBJECT.body);
+    expect(mockFile.save).toBeCalledWith(OBJECT.body, { resumable: false });
     expect(mockFile.setMetadata).toBeCalledWith(OBJECT.metadata);
   });
 });

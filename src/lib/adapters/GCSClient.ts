@@ -44,7 +44,9 @@ export class GCSClient implements ObjectStoreClient {
 
   public async putObject(object: StoreObject, key: string, bucket: string): Promise<void> {
     const file = this.client.bucket(bucket).file(key);
-    await file.save(object.body);
+    await file.save(object.body, {
+      resumable: false, // https://github.com/fsouza/fake-gcs-server/issues/346
+    });
     await file.setMetadata(object.metadata);
   }
 }
