@@ -48,16 +48,7 @@ jobs:
         with:
           ruby-version: '2.5'
       - name: Generate docs
-        run: |
-          # Jekyll docs:
-          gem install bundler
-          cd docs
-          bundle install --path vendor/bundle
-          bundle exec jekyll build
-
-          # TypeDoc docs:
-          cd ..
-          npm run doc-api
+        run: npm run doc-api
 
       - name: Release
         env:
