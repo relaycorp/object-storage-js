@@ -2696,84 +2696,12 @@ img {
 <div class="container container-main">
 	<div class="content-wrap">
 		<div class="tsd-panel tsd-typography">
-			<a href="#relaycorpobject-storage" id="relaycorpobject-storage" style="color: inherit; text-decoration: none;">
-				<h1>@relaycorp/object-storage</h1>
+			<a href="#object-storage-js" id="object-storage-js" style="color: inherit; text-decoration: none;">
+				<h1>object-storage-js</h1>
 			</a>
-			<p>This library allows you to interact with major object storage backends (e.g., Amazon S3) using a unified interface.</p>
-			<a href="#install" id="install" style="color: inherit; text-decoration: none;">
-				<h2>Install</h2>
-			</a>
-			<p>Releases are automatically pushed to NPM. For example, to get the latest release, run:</p>
-			<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> @</span><span style="color: #001080">relaycorp</span><span style="color: #000000">/</span><span style="color: #001080">object</span><span style="color: #000000">-</span><span style="color: #001080">storage</span>
-</code></pre>
-			<a href="#supported-backends" id="supported-backends" style="color: inherit; text-decoration: none;">
-				<h2>Supported backends</h2>
-			</a>
-			<table>
-				<thead>
-					<tr>
-						<th>Backend</th>
-						<th>Name</th>
-						<th>SDK used internally</th>
-						<th>Access/secret key support</th>
-					</tr>
-				</thead>
-				<tbody><tr>
-						<td>Amazon S3</td>
-						<td><code>s3</code></td>
-						<td>AWS</td>
-						<td>Optional</td>
-					</tr>
-					<tr>
-						<td>Google Cloud Storage (GCS)</td>
-						<td><code>gcs</code></td>
-						<td>GCP</td>
-						<td>Unsupported. Use alternative authentication methods instead, like <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity">workload identity</a>.</td>
-					</tr>
-					<tr>
-						<td>Minio</td>
-						<td><code>minio</code></td>
-						<td>AWS</td>
-						<td>Required</td>
-					</tr>
-			</tbody></table>
-			<a href="#supported-operations" id="supported-operations" style="color: inherit; text-decoration: none;">
-				<h2>Supported operations</h2>
-			</a>
-			<ul>
-				<li>Get object (along with its metadata).</li>
-				<li>Create/update object (along with its metadata).</li>
-				<li>Delete object.</li>
-				<li>List objects under a given prefix. Pagination is handled automatically: We return an iterable and retrieve the next page lazily.</li>
-			</ul>
-			<p>We welcome PRs to support additional operations, as long as each new operation is supported across all backends in a normalised way, and has unit and functional tests.</p>
-			<a href="#example" id="example" style="color: inherit; text-decoration: none;">
-				<h2>Example</h2>
-			</a>
-			<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">initObjectStoreClient</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@relaycorp/object-storage&#039;</span><span style="color: #000000">;</span>
-
-<span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">main</span><span style="color: #000000">(): </span><span style="color: #267F99">Promise</span><span style="color: #000000">&lt;</span><span style="color: #267F99">void</span><span style="color: #000000">&gt; {</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">client</span><span style="color: #000000"> = </span><span style="color: #795E26">initObjectStoreClient</span><span style="color: #000000">(</span>
-<span style="color: #000000">    </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">STORE_BACKEND</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">STORE_ENDPOINT</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">STORE_ACCESS_KEY</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">STORE_SECRET_KEY</span><span style="color: #000000">,</span>
-<span style="color: #000000">  );</span>
-
-<span style="color: #000000">  </span><span style="color: #AF00DB">for</span><span style="color: #000000"> </span><span style="color: #AF00DB">await</span><span style="color: #000000"> (</span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">objectKey</span><span style="color: #000000"> </span><span style="color: #0000FF">of</span><span style="color: #000000"> </span><span style="color: #001080">client</span><span style="color: #000000">.</span><span style="color: #795E26">listObjectKeys</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;prefix/&quot;</span><span style="color: #000000">, </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">STORE_BUCKET</span><span style="color: #000000">)) {</span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;- &quot;</span><span style="color: #000000">, </span><span style="color: #001080">objectKey</span><span style="color: #000000">)</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">}</span>
-</code></pre>
-			<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
-				<h2>API documentation</h2>
-			</a>
-			<p>The API documentation can be found on <a href="https://docs.relaycorp.tech/object-storage-js/">docs.relaycorp.tech</a>.</p>
-			<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
-				<h2>Contributing</h2>
-			</a>
-			<p>We love contributions! If you haven&#39;t contributed to a Relaycorp project before, please take a minute to <a href="https://github.com/relaycorp/.github/blob/master/CONTRIBUTING.md">read our guidelines</a> first.</p>
+			<p>Node.js client for object stores like AWS S3, GCP GCS or Minio</p>
 		</div>
+		<div style="position:relative;"><a name="typedoc-main-index" class="tsd-anchor"></a></div>
 		<section class="tsd-panel-group tsd-index-group">
 			<h2>Index</h2>
 			<section class="tsd-panel tsd-index-panel">
@@ -2814,7 +2742,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">Adapter<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;gcs&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;minio&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;s3&quot;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/dd98ee0/src/lib/adapters/index.ts#L5">src/lib/adapters/index.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/46bc33f/src/lib/adapters/index.ts#L5">src/lib/adapters/index.ts:5</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -2831,7 +2759,7 @@ img {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/dd98ee0/src/lib/init.ts#L21">src/lib/init.ts:21</a></li>
+								<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/46bc33f/src/lib/init.ts#L21">src/lib/init.ts:21</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
