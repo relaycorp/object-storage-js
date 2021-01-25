@@ -4,7 +4,7 @@ This library allows you to interact with major object storage backends (e.g., Am
 
 ## Install
 
-Releases are automatically pushed to NPM. For example, to get the latest release, run:
+Releases are automatically pushed to [NPM](https://www.npmjs.com/package/@relaycorp/object-storage). For example, to get the latest release, run:
 
 ```
 npm install @relaycorp/object-storage
