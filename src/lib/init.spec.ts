@@ -5,6 +5,9 @@ import { initObjectStoreClient } from './init';
 import { ObjectStorageError } from './ObjectStorageError';
 
 jest.mock('./adapters/S3Client');
+jest.mock('./adapters/GCSClient');
+
+const ADAPTERS_WITHOUT_CREDENTIALS_SUPPORT: readonly AdapterType[] = ['gcs'];
 
 describe('initObjectStoreClient', () => {
   test('An invalid type should be refused', () => {
@@ -17,22 +20,26 @@ describe('initObjectStoreClient', () => {
   test.each(Object.getOwnPropertyNames(CLIENT_BY_ADAPTER_NAME))(
     '%s client should be returned if requested',
     (adapterName) => {
+      const passCredentials = !ADAPTERS_WITHOUT_CREDENTIALS_SUPPORT.includes(
+        adapterName as AdapterType,
+      );
       const client = initObjectStoreClient(
         adapterName as any,
         ENDPOINT,
-        ACCESS_KEY,
-        SECRET_ACCESS_KEY,
+        passCredentials ? ACCESS_KEY : undefined,
+        passCredentials ? SECRET_ACCESS_KEY : undefined,
       );
 
       const expectedClientClass = CLIENT_BY_ADAPTER_NAME[adapterName as AdapterType];
       expect(client).toBeInstanceOf(expectedClientClass);
+      const credentials = {
+        accessKeyId: ACCESS_KEY,
+        secretAccessKey: SECRET_ACCESS_KEY,
+      };
       expect(expectedClientClass).toBeCalledWith({
-        credentials: {
-          accessKeyId: ACCESS_KEY,
-          secretAccessKey: SECRET_ACCESS_KEY,
-        },
         endpoint: ENDPOINT,
         tlsEnabled: true,
+        ...(passCredentials && { credentials }),
       });
     },
   );

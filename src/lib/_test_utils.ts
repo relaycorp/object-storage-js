@@ -2,7 +2,7 @@ import { ClientCredentials } from './config';
 
 export const SECRET_ACCESS_KEY = 'secret-access-key';
 export const ACCESS_KEY = 'the-access-key';
-export const ENDPOINT = 'the-endpoint';
+export const ENDPOINT = 'the-endpoint:1234';
 export const CLIENT_CREDENTIALS: ClientCredentials = {
   accessKeyId: ACCESS_KEY,
   secretAccessKey: SECRET_ACCESS_KEY,
