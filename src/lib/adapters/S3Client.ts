@@ -3,6 +3,7 @@ import * as http from 'http';
 import * as https from 'https';
 
 import { ClientConfig } from '../config';
+import { NonExistingObjectError } from '../errors';
 import { ObjectStoreClient } from '../ObjectStoreClient';
 import { StoreObject } from '../StoreObject';
 
@@ -61,6 +62,9 @@ export class S3Client implements ObjectStoreClient {
   }
 
   public async deleteObject(key: string, bucket: string): Promise<void> {
-    await this.client.deleteObject({ Key: key, Bucket: bucket }).promise();
+    const result = await this.client.deleteObject({ Key: key, Bucket: bucket }).promise();
+    if (result.$response.httpResponse.statusCode === 404) {
+      throw new NonExistingObjectError(`Object ${key} in bucket ${bucket} doesn't exist`);
+    }
   }
 }

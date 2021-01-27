@@ -1,10 +1,11 @@
 import { Storage } from '@google-cloud/storage';
 
 import { asyncIterableToArray, CLIENT_CREDENTIALS, ENDPOINT, mockSpy } from '../_test_utils';
-import { ObjectStorageError } from '../ObjectStorageError';
+import { NonExistingObjectError, ObjectStorageError } from '../errors';
 import {
   BUCKET,
   CLIENT_CONFIG,
+  getPromiseRejection,
   OBJECT,
   OBJECT1_KEY,
   OBJECT2_KEY,
@@ -159,4 +160,31 @@ describe('deleteObject', () => {
     expect(mockBucket.file).toBeCalledWith(OBJECT1_KEY);
     expect(mockFile.delete).toBeCalledWith();
   });
+
+  test('Non-existing objects should result in a NonExistingObjectError', async () => {
+    const apiError = new ApiError('Whoops', 404);
+    mockFile.delete.mockRejectedValue(apiError);
+
+    const error = await getPromiseRejection(CLIENT.deleteObject(OBJECT1_KEY, BUCKET));
+    expect(error).toBeInstanceOf(NonExistingObjectError);
+    expect(error.message).toEqual(
+      `Object ${OBJECT1_KEY} in bucket ${BUCKET} doesn't exist (${apiError.message})`,
+    );
+  });
+
+  test('Other errors should be propagated', async () => {
+    const apiError = new Error('Whoops');
+    mockFile.delete.mockRejectedValue(apiError);
+
+    await expect(CLIENT.deleteObject(OBJECT1_KEY, BUCKET)).rejects.toEqual(apiError);
+  });
 });
+
+/**
+ * Mock GCS' own `ApiError`.
+ */
+class ApiError extends Error {
+  constructor(message: string, public readonly code: number) {
+    super(message);
+  }
+}

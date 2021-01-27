@@ -1,5 +1,5 @@
 import { ClientConfig } from '../config';
-import { ObjectStorageError } from '../ObjectStorageError';
+import { ObjectStorageError } from '../errors';
 import { S3Client } from './S3Client';
 
 export class MinioClient extends S3Client {

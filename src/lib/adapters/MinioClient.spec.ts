@@ -1,5 +1,5 @@
 import { CLIENT_CREDENTIALS, ENDPOINT } from '../_test_utils';
-import { ObjectStorageError } from '../ObjectStorageError';
+import { ObjectStorageError } from '../errors';
 import { MinioClient } from './MinioClient';
 
 jest.mock('aws-sdk');

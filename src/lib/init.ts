@@ -1,6 +1,6 @@
 import { AdapterType, CLIENT_BY_ADAPTER_NAME } from './adapters';
 import { ClientConfig } from './config';
-import { ObjectStorageError } from './ObjectStorageError';
+import { ObjectStorageError } from './errors';
 import { ObjectStoreClient } from './ObjectStoreClient';
 
 type clientConstructor = (config: ClientConfig) => ObjectStoreClient;

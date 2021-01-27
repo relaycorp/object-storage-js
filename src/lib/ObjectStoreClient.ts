@@ -18,5 +18,10 @@ export interface ObjectStoreClient {
 
   readonly putObject: (object: StoreObject, key: string, bucket: string) => Promise<void>;
 
+  /**
+   * Delete the object corresponding to`key`.
+   *
+   * @throws [NonExistingObjectError] If the object does not exist
+   */
   readonly deleteObject: (key: string, bucket: string) => Promise<void>;
 }
