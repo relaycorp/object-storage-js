@@ -2748,9 +2748,17 @@ img {
 				<div class="tsd-signature tsd-kind-icon">delete<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/b4f6913/src/lib/ObjectStoreClient.ts#L21">src/lib/ObjectStoreClient.ts:21</a></li>
+						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/b22c64c/src/lib/ObjectStoreClient.ts#L28">src/lib/ObjectStoreClient.ts:28</a></li>
 					</ul>
 				</aside>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Delete the object corresponding to <code>key</code>.</p>
+					</div>
+					<p>This method resolves even if the <code>key</code> doesn&#39;t exist, in order to provide a normalised API,
+						since Amazon S3 always returns a <code>204</code> regardless of whether the object exists (GCS returns a
+					<code>404</code> and its SDK throws an error).</p>
+				</div>
 				<div class="tsd-type-declaration">
 					<h4>Type declaration</h4>
 					<ul class="tsd-parameters">
@@ -2782,7 +2790,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">get<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="storeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">StoreObject</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/b4f6913/src/lib/ObjectStoreClient.ts#L7">src/lib/ObjectStoreClient.ts:7</a></li>
+						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/b22c64c/src/lib/ObjectStoreClient.ts#L7">src/lib/ObjectStoreClient.ts:7</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
@@ -2816,7 +2824,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">list<wbr>Object<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">AsyncIterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/b4f6913/src/lib/ObjectStoreClient.ts#L17">src/lib/ObjectStoreClient.ts:17</a></li>
+						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/b22c64c/src/lib/ObjectStoreClient.ts#L17">src/lib/ObjectStoreClient.ts:17</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -2862,7 +2870,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">put<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><a href="storeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">StoreObject</a>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/b4f6913/src/lib/ObjectStoreClient.ts#L19">src/lib/ObjectStoreClient.ts:19</a></li>
+						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/b22c64c/src/lib/ObjectStoreClient.ts#L19">src/lib/ObjectStoreClient.ts:19</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
