@@ -1,7 +1,7 @@
 import { GetFilesOptions, Storage } from '@google-cloud/storage';
 
 import { ClientConfig } from '../config';
-import { ObjectStorageError } from '../ObjectStorageError';
+import { ObjectStorageError } from '../errors';
 import { ObjectStoreClient } from '../ObjectStoreClient';
 import { StoreObject } from '../StoreObject';
 
@@ -22,7 +22,13 @@ export class GCSClient implements ObjectStoreClient {
 
   public async deleteObject(key: string, bucket: string): Promise<void> {
     const file = this.client.bucket(bucket).file(key);
-    await file.delete();
+    try {
+      await file.delete();
+    } catch (error) {
+      if (error.code !== 404) {
+        throw error;
+      }
+    }
   }
 
   public async getObject(key: string, bucket: string): Promise<StoreObject> {

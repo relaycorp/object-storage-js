@@ -1,7 +1,7 @@
 import { Storage } from '@google-cloud/storage';
 
 import { asyncIterableToArray, CLIENT_CREDENTIALS, ENDPOINT, mockSpy } from '../_test_utils';
-import { ObjectStorageError } from '../ObjectStorageError';
+import { ObjectStorageError } from '../errors';
 import {
   BUCKET,
   CLIENT_CONFIG,
@@ -159,4 +159,26 @@ describe('deleteObject', () => {
     expect(mockBucket.file).toBeCalledWith(OBJECT1_KEY);
     expect(mockFile.delete).toBeCalledWith();
   });
+
+  test('Failure to delete non-existing object should be suppressed', async () => {
+    mockFile.delete.mockRejectedValue(new ApiError('Whoops', 404));
+
+    await expect(CLIENT.deleteObject(OBJECT1_KEY, BUCKET)).toResolve();
+  });
+
+  test('Other errors should be propagated', async () => {
+    const apiError = new Error('Whoops');
+    mockFile.delete.mockRejectedValue(apiError);
+
+    await expect(CLIENT.deleteObject(OBJECT1_KEY, BUCKET)).rejects.toEqual(apiError);
+  });
 });
+
+/**
+ * Mock GCS' own `ApiError`.
+ */
+class ApiError extends Error {
+  constructor(message: string, public readonly code: number) {
+    super(message);
+  }
+}

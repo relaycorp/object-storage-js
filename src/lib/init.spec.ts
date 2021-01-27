@@ -1,8 +1,8 @@
 import { ACCESS_KEY, ENDPOINT, SECRET_ACCESS_KEY } from './_test_utils';
 import { AdapterType, CLIENT_BY_ADAPTER_NAME } from './adapters';
 import { S3Client } from './adapters/S3Client';
+import { ObjectStorageError } from './errors';
 import { initObjectStoreClient } from './init';
-import { ObjectStorageError } from './ObjectStorageError';
 
 jest.mock('./adapters/S3Client');
 jest.mock('./adapters/GCSClient');

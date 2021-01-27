@@ -70,4 +70,6 @@ async function testClient(
   await expect(
     asyncIterableToArray(client.listObjectKeys(OBJECT_PREFIX, OBJECT_STORE_BUCKET)),
   ).resolves.toHaveLength(0);
+
+  await expect(client.deleteObject('non-existing.txt', OBJECT_STORE_BUCKET)).toResolve();
 }
