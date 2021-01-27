@@ -10,11 +10,9 @@ import {
   mockSpy,
   SECRET_ACCESS_KEY,
 } from '../_test_utils';
-import { NonExistingObjectError } from '../errors';
 import {
   BUCKET,
   CLIENT_CONFIG,
-  getPromiseRejection,
   OBJECT,
   OBJECT1_KEY,
   OBJECT2_KEY,
@@ -22,9 +20,7 @@ import {
 } from './_test_utils';
 
 const mockS3Client = {
-  deleteObject: mockSpy(jest.fn(), () => ({
-    promise: () => Promise.resolve(makeMockResponse(200)),
-  })),
+  deleteObject: mockSpy(jest.fn(), () => ({ promise: () => Promise.resolve() })),
   getObject: mockSpy(jest.fn(), () => ({ promise: () => Promise.resolve({}) })),
   listObjectsV2: mockSpy(jest.fn(), () => ({ promise: () => Promise.resolve({ Contents: [] }) })),
   putObject: mockSpy(jest.fn(), () => ({ promise: () => Promise.resolve() })),
@@ -274,19 +270,4 @@ describe('deleteObject', () => {
       Key: OBJECT1_KEY,
     });
   });
-
-  test('Non-existing objects should result in a NonExistingObjectError', async () => {
-    const statusCode = 404;
-    mockS3Client.deleteObject.mockImplementation(() => ({
-      promise: () => Promise.resolve(makeMockResponse(statusCode)),
-    }));
-
-    const error = await getPromiseRejection(CLIENT.deleteObject(OBJECT1_KEY, BUCKET));
-    expect(error).toBeInstanceOf(NonExistingObjectError);
-    expect(error.message).toEqual(`Object ${OBJECT1_KEY} in bucket ${BUCKET} doesn't exist`);
-  });
 });
-
-function makeMockResponse(statusCode: number): AWS.Response<any, any> {
-  return { $response: { httpResponse: { statusCode } } } as any;
-}

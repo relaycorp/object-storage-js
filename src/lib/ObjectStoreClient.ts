@@ -19,9 +19,11 @@ export interface ObjectStoreClient {
   readonly putObject: (object: StoreObject, key: string, bucket: string) => Promise<void>;
 
   /**
-   * Delete the object corresponding to`key`.
+   * Delete the object corresponding to `key`.
    *
-   * @throws [NonExistingObjectError] If the object does not exist
+   * This method resolves even if the `key` doesn't exist, in order to provide a normalised API,
+   * since Amazon S3 always returns a `204` regardless of whether the object exists (GCS returns a
+   * `404` and its SDK throws an error).
    */
   readonly deleteObject: (key: string, bucket: string) => Promise<void>;
 }

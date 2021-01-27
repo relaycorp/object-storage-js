@@ -6,7 +6,6 @@ import { Client as MinioClient } from 'minio';
 import { asyncIterableToArray } from '../lib/_test_utils';
 import { AdapterType } from '../lib/adapters';
 import { OBJECT, OBJECT1_KEY, OBJECT_PREFIX } from '../lib/adapters/_test_utils';
-import { NonExistingObjectError } from '../lib/errors';
 import { initObjectStoreClient } from '../lib/init';
 
 loadDotEnvVars();
@@ -72,7 +71,5 @@ async function testClient(
     asyncIterableToArray(client.listObjectKeys(OBJECT_PREFIX, OBJECT_STORE_BUCKET)),
   ).resolves.toHaveLength(0);
 
-  await expect(client.deleteObject(OBJECT1_KEY, OBJECT_STORE_BUCKET)).rejects.toBeInstanceOf(
-    NonExistingObjectError,
-  );
+  await expect(client.deleteObject('non-existing.txt', OBJECT_STORE_BUCKET)).toResolve();
 }

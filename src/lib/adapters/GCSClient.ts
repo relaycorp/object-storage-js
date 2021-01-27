@@ -1,7 +1,7 @@
 import { GetFilesOptions, Storage } from '@google-cloud/storage';
 
 import { ClientConfig } from '../config';
-import { NonExistingObjectError, ObjectStorageError } from '../errors';
+import { ObjectStorageError } from '../errors';
 import { ObjectStoreClient } from '../ObjectStoreClient';
 import { StoreObject } from '../StoreObject';
 
@@ -25,12 +25,9 @@ export class GCSClient implements ObjectStoreClient {
     try {
       await file.delete();
     } catch (error) {
-      if (error.code === 404) {
-        throw new NonExistingObjectError(
-          `Object ${key} in bucket ${bucket} doesn't exist (${error.message})`,
-        );
+      if (error.code !== 404) {
+        throw error;
       }
-      throw error;
     }
   }
 
