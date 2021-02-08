@@ -22,4 +22,6 @@ else
   sleep 3s
 fi
 
+docker-compose ps
+
 exec jest --config jest.config.functional.js --runInBand --detectOpenHandles
