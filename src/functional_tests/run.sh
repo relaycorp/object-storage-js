@@ -15,6 +15,11 @@ docker-compose pull
 docker-compose build
 
 docker-compose up  --force-recreate  --detach
-sleep 3s
+if [[ "${CI:-false}" == "true" ]]; then
+  # GitHub Actions are painfully slow
+  sleep 5s
+else
+  sleep 3s
+fi
 
 exec jest --config jest.config.functional.js --runInBand --detectOpenHandles
