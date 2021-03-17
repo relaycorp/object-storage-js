@@ -1,4 +1,6 @@
+// tslint:disable:no-submodule-imports
 import { S3 } from 'aws-sdk';
+import { GetObjectOutput } from 'aws-sdk/clients/s3';
 import * as http from 'http';
 import * as https from 'https';
 
@@ -28,9 +30,17 @@ export class S3Client implements ObjectStoreClient {
     });
   }
 
-  public async getObject(key: string, bucket: string): Promise<StoreObject> {
-    const data = await this.client.getObject({ Bucket: bucket, Key: key }).promise();
-    return { body: data.Body as Buffer, metadata: data.Metadata || {} };
+  public async getObject(key: string, bucket: string): Promise<StoreObject | null> {
+    let s3Object: GetObjectOutput;
+    try {
+      s3Object = await this.client.getObject({ Bucket: bucket, Key: key }).promise();
+    } catch (err) {
+      if (err.code === 'NoSuchKey') {
+        return null;
+      }
+      throw err;
+    }
+    return { body: s3Object.Body as Buffer, metadata: s3Object.Metadata || {} };
   }
 
   public async *listObjectKeys(prefix: string, bucket: string): AsyncIterable<string> {
