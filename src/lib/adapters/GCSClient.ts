@@ -1,4 +1,4 @@
-import { GetFilesOptions, Storage } from '@google-cloud/storage';
+import { File, GetFilesOptions, Storage } from '@google-cloud/storage';
 
 import { ClientConfig } from '../config';
 import { ObjectStorageError } from '../errors';
@@ -31,8 +31,16 @@ export class GCSClient implements ObjectStoreClient {
     }
   }
 
-  public async getObject(key: string, bucket: string): Promise<StoreObject> {
-    const [gcsFile] = await this.client.bucket(bucket).file(key).get();
+  public async getObject(key: string, bucket: string): Promise<StoreObject | null> {
+    let gcsFile: File;
+    try {
+      [gcsFile] = await this.client.bucket(bucket).file(key).get();
+    } catch (err) {
+      if (err.code === 404) {
+        return null;
+      }
+      throw err;
+    }
     const download = await gcsFile.download();
     return { body: download[0], metadata: gcsFile.metadata.metadata ?? {} };
   }

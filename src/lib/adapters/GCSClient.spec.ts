@@ -140,6 +140,19 @@ describe('getObject', () => {
     expect(object).toHaveProperty('body', OBJECT.body);
     expect(object).toHaveProperty('metadata', {});
   });
+
+  test('Nothing should be returned if the key does not exist', async () => {
+    mockFile.get.mockRejectedValue(new ApiError('Whoops', 404));
+
+    await expect(CLIENT.getObject(OBJECT1_KEY, BUCKET)).resolves.toBeNull();
+  });
+
+  test('Errors other than a missing key should be propagated', async () => {
+    const apiError = new Error('Whoops');
+    mockFile.get.mockRejectedValue(apiError);
+
+    await expect(CLIENT.getObject(OBJECT1_KEY, BUCKET)).rejects.toEqual(apiError);
+  });
 });
 
 describe('putObject', () => {

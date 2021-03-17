@@ -4,7 +4,10 @@ import { StoreObject } from './StoreObject';
  * Interface for all object store clients.
  */
 export interface ObjectStoreClient {
-  readonly getObject: (key: string, bucket: string) => Promise<StoreObject>;
+  /**
+   * Retrieve the object by key or return `null` if the key doesn't exist.
+   */
+  readonly getObject: (key: string, bucket: string) => Promise<StoreObject | null>;
 
   /**
    * Retrieve the keys for all the objects in the specified bucket with the specified key prefix.

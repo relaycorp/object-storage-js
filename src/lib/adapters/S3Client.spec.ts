@@ -244,6 +244,25 @@ describe('getObject', () => {
     expect(object).toHaveProperty('body', OBJECT.body);
     expect(object).toHaveProperty('metadata', {});
   });
+
+  test('Nothing should be returned if the key does not exist', async () => {
+    mockS3Client.getObject.mockReturnValue({
+      promise: () => Promise.reject({ code: 'NoSuchKey' }),
+    });
+
+    const object = await CLIENT.getObject(OBJECT1_KEY, BUCKET);
+
+    expect(object).toBeNull();
+  });
+
+  test('Errors other than NoSuchKey should be propagated', async () => {
+    const error = new Error('Oh noes');
+    mockS3Client.getObject.mockReturnValue({
+      promise: () => Promise.reject(error),
+    });
+
+    await expect(CLIENT.getObject(OBJECT1_KEY, BUCKET)).rejects.toEqual(error);
+  });
 });
 
 describe('putObject', () => {
