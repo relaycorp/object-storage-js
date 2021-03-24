@@ -40,11 +40,11 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^5.8.1",
-    "aws-sdk": "^2.865.0"
+    "aws-sdk": "^2.868.0"
   },
   "devDependencies": {
     "@relaycorp/shared-config": "^1.4.13",
-    "@types/jest": "^26.0.20",
+    "@types/jest": "^26.0.21",
     "@types/minio": "^7.0.7",
     "del-cli": "^3.0.0",
     "dotenv": "^8.2.0",
