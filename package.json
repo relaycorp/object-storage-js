@@ -40,11 +40,11 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^5.8.1",
-    "aws-sdk": "^2.868.0"
+    "aws-sdk": "^2.884.0"
   },
   "devDependencies": {
     "@relaycorp/shared-config": "^1.4.13",
-    "@types/jest": "^26.0.21",
+    "@types/jest": "^26.0.22",
     "@types/minio": "^7.0.7",
     "del-cli": "^3.0.0",
     "dotenv": "^8.2.0",
@@ -59,7 +59,7 @@
     "ts-jest": "^24.3.0",
     "ts-node": "^9.1.1",
     "tslint": "^5.20.1",
-    "typedoc": "^0.20.33",
+    "typedoc": "^0.20.35",
     "typescript": "^4.1.5"
   },
   "prettier": "@relaycorp/shared-config/.prettierrc.json",
