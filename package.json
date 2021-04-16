@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@relaycorp/shared-config": "^1.4.13",
-    "@types/jest": "^26.0.21",
+    "@types/jest": "^26.0.22",
     "@types/minio": "^7.0.7",
     "del-cli": "^3.0.0",
     "dotenv": "^8.2.0",
