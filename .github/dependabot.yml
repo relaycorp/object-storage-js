@@ -8,26 +8,3 @@ updates:
     timezone: Etc/UCT
   open-pull-requests-limit: 99
   versioning-strategy: increase
-  ignore:
-  - dependency-name: "@google-cloud/storage"
-    versions:
-    - 5.8.2
-    - 5.8.3
-  - dependency-name: aws-sdk
-    versions:
-    - 2.843.0
-    - 2.858.0
-    - 2.863.0
-    - 2.874.0
-    - 2.879.0
-  - dependency-name: y18n
-    versions:
-    - 4.0.1
-  - dependency-name: typedoc
-    versions:
-    - 0.20.25
-    - 0.20.30
-    - 0.20.34
-  - dependency-name: typescript
-    versions:
-    - 4.2.3
