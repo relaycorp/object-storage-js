@@ -48,7 +48,7 @@
     "@types/minio": "^7.0.7",
     "del-cli": "^4.0.0",
     "dotenv": "^10.0.0",
-    "env-var": "^7.0.0",
+    "env-var": "^7.0.1",
     "gh-pages": "^3.2.3",
     "jest": "^24.9.0",
     "jest-date-mock": "^1.0.8",
