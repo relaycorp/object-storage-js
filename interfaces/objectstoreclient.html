@@ -2776,17 +2776,9 @@ img {
 				<div class="tsd-signature tsd-kind-icon">delete<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/86c28de/src/lib/ObjectStoreClient.ts#L31">src/lib/ObjectStoreClient.ts:31</a></li>
+						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/941ee9b/src/lib/ObjectStoreClient.ts#L31">src/lib/ObjectStoreClient.ts:31</a></li>
 					</ul>
 				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Delete the object corresponding to <code>key</code>.</p>
-					</div>
-					<p>This method resolves even if the <code>key</code> doesn&#39;t exist, in order to provide a normalised API,
-						since Amazon S3 always returns a <code>204</code> regardless of whether the object exists (GCS returns a
-					<code>404</code> and its SDK throws an error).</p>
-				</div>
 				<div class="tsd-type-declaration">
 					<h4>Type declaration</h4>
 					<ul class="tsd-parameters">
@@ -2796,6 +2788,14 @@ img {
 							</ul>
 							<ul class="tsd-descriptions">
 								<li class="tsd-description">
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Delete the object corresponding to <code>key</code>.</p>
+										</div>
+										<p>This method resolves even if the <code>key</code> doesn&#39;t exist, in order to provide a normalised API,
+											since Amazon S3 always returns a <code>204</code> regardless of whether the object exists (GCS returns a
+										<code>404</code> and its SDK throws an error).</p>
+									</div>
 									<h4 class="tsd-parameters-title">Parameters</h4>
 									<ul class="tsd-parameters">
 										<li>
@@ -2818,14 +2818,9 @@ img {
 				<div class="tsd-signature tsd-kind-icon">get<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="storeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">StoreObject</a><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/86c28de/src/lib/ObjectStoreClient.ts#L10">src/lib/ObjectStoreClient.ts:10</a></li>
+						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/941ee9b/src/lib/ObjectStoreClient.ts#L10">src/lib/ObjectStoreClient.ts:10</a></li>
 					</ul>
 				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Retrieve the object by key or return <code>null</code> if the key doesn&#39;t exist.</p>
-					</div>
-				</div>
 				<div class="tsd-type-declaration">
 					<h4>Type declaration</h4>
 					<ul class="tsd-parameters">
@@ -2835,6 +2830,11 @@ img {
 							</ul>
 							<ul class="tsd-descriptions">
 								<li class="tsd-description">
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Retrieve the object by key or return <code>null</code> if the key doesn&#39;t exist.</p>
+										</div>
+									</div>
 									<h4 class="tsd-parameters-title">Parameters</h4>
 									<ul class="tsd-parameters">
 										<li>
@@ -2857,21 +2857,9 @@ img {
 				<div class="tsd-signature tsd-kind-icon">list<wbr>Object<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>prefix<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">AsyncIterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/86c28de/src/lib/ObjectStoreClient.ts#L20">src/lib/ObjectStoreClient.ts:20</a></li>
+						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/941ee9b/src/lib/ObjectStoreClient.ts#L20">src/lib/ObjectStoreClient.ts:20</a></li>
 					</ul>
 				</aside>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Retrieve the keys for all the objects in the specified bucket with the specified key prefix.</p>
-					</div>
-					<p>This will handle pagination if the backend supports it (S3 does, Minio doesn&#39;t).</p>
-					<dl class="tsd-comment-tags">
-						<dt>param</dt>
-						<dd></dd>
-						<dt>param</dt>
-						<dd></dd>
-					</dl>
-				</div>
 				<div class="tsd-type-declaration">
 					<h4>Type declaration</h4>
 					<ul class="tsd-parameters">
@@ -2881,6 +2869,12 @@ img {
 							</ul>
 							<ul class="tsd-descriptions">
 								<li class="tsd-description">
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Retrieve the keys for all the objects in the specified bucket with the specified key prefix.</p>
+										</div>
+										<p>This will handle pagination if the backend supports it (S3 does, Minio doesn&#39;t).</p>
+									</div>
 									<h4 class="tsd-parameters-title">Parameters</h4>
 									<ul class="tsd-parameters">
 										<li>
@@ -2888,6 +2882,10 @@ img {
 										</li>
 										<li>
 											<h5>bucket: <span class="tsd-signature-type">string</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+												</div>
+											</div>
 										</li>
 									</ul>
 									<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AsyncIterable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2903,7 +2901,7 @@ img {
 				<div class="tsd-signature tsd-kind-icon">put<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><a href="storeobject.html" class="tsd-signature-type" data-tsd-kind="Interface">StoreObject</a>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, bucket<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/86c28de/src/lib/ObjectStoreClient.ts#L22">src/lib/ObjectStoreClient.ts:22</a></li>
+						<li>Defined in <a href="https://github.com/relaycorp/object-storage-js/blob/941ee9b/src/lib/ObjectStoreClient.ts#L22">src/lib/ObjectStoreClient.ts:22</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-type-declaration">
