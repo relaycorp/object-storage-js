@@ -15,7 +15,7 @@ services:
       - '127.0.0.1:9000:9000'
 
   gcs:
-    image: fsouza/fake-gcs-server:1.21.2
+    image: fsouza/fake-gcs-server:v1.29.0
     init: true
     command: ["-scheme", "http", "-port", "8080"]
     ports:
