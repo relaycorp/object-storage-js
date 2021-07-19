@@ -46,7 +46,7 @@
     "@relaycorp/shared-config": "^1.5.0",
     "@types/jest": "^26.0.24",
     "@types/minio": "^7.0.8",
-    "del-cli": "^4.0.0",
+    "del-cli": "^4.0.1",
     "dotenv": "^10.0.0",
     "env-var": "^7.0.1",
     "gh-pages": "^3.2.3",
