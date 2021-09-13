@@ -55,7 +55,7 @@
     "jest-extended": "^0.11.5",
     "minio": "^7.0.18",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.3.2",
+    "prettier": "^2.4.0",
     "ts-jest": "^24.3.0",
     "ts-node": "^10.1.0",
     "tslint": "^5.20.1",
