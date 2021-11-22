@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^5.15.5",
-    "aws-sdk": "^2.945.0"
+    "aws-sdk": "^2.1033.0"
   },
   "devDependencies": {
     "@relaycorp/shared-config": "^1.6.0",
