@@ -18,6 +18,8 @@ sleep 3s
 
 docker-compose ps
 
+export GOOGLE_APPLICATION_CREDENTIALS="${CURRENT_DIR}/dummy-gcp-credentials.json"
 if ! jest --config jest.config.integration.js --runInBand --detectOpenHandles ; then
   docker-compose logs gcs
+  exit 1
 fi
