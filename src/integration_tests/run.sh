@@ -18,6 +18,6 @@ sleep 3s
 
 docker-compose ps
 
-if ! jest --config jest.config.functional.js --runInBand --detectOpenHandles ; then
+if ! jest --config jest.config.integration.js --runInBand --detectOpenHandles ; then
   docker-compose logs gcs
 fi
