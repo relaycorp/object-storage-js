@@ -31,7 +31,8 @@
     "test": "jest --coverage",
     "test:ci:unit": "run-s build test:ci:unit:jest",
     "test:ci:unit:jest": "jest --config jest.config.ci.js --coverage",
-    "test:functional": "./src/functional_tests/run.sh",
+    "pretest:integration": "run-s build",
+    "test:integration": "src/integration_tests/run.sh",
     "doc-api": "typedoc src/index.ts --out build/docs",
     "clean": "del-cli build test"
   },
