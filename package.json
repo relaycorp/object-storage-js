@@ -41,14 +41,14 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^5.18.0",
-    "aws-sdk": "^2.1058.0"
+    "aws-sdk": "^2.1066.0"
   },
   "devDependencies": {
     "@relaycorp/shared-config": "^1.6.1",
     "@types/jest": "^27.4.0",
     "@types/minio": "^7.0.11",
     "del-cli": "^4.0.1",
-    "dotenv": "^14.2.0",
+    "dotenv": "^15.0.0",
     "env-var": "^7.1.1",
     "gh-pages": "^3.2.3",
     "jest": "^24.9.0",
