@@ -24,9 +24,9 @@ export class GCSClient implements ObjectStoreClient {
     const file = this.client.bucket(bucket).file(key);
     try {
       await file.delete();
-    } catch (error) {
-      if (error.code !== 404) {
-        throw error;
+    } catch (err) {
+      if ((err as any).code !== 404) {
+        throw err;
       }
     }
   }
@@ -36,7 +36,7 @@ export class GCSClient implements ObjectStoreClient {
     try {
       [gcsFile] = await this.client.bucket(bucket).file(key).get();
     } catch (err) {
-      if (err.code === 404) {
+      if ((err as any).code === 404) {
         return null;
       }
       throw err;
