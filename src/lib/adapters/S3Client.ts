@@ -35,7 +35,7 @@ export class S3Client implements ObjectStoreClient {
     try {
       s3Object = await this.client.getObject({ Bucket: bucket, Key: key }).promise();
     } catch (err) {
-      if (err.code === 'NoSuchKey') {
+      if ((err as any).code === 'NoSuchKey') {
         return null;
       }
       throw err;
