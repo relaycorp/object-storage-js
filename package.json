@@ -44,7 +44,7 @@
     "aws-sdk": "^2.1171.0"
   },
   "devDependencies": {
-    "@relaycorp/shared-config": "^1.8.0",
+    "@relaycorp/shared-config": "^1.9.0",
     "@types/jest": "^27.5.0",
     "@types/minio": "^7.0.13",
     "del-cli": "^4.0.1",
