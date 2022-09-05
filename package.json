@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^6.4.1",
-    "aws-sdk": "^2.1204.0"
+    "aws-sdk": "^2.1209.0"
   },
   "devDependencies": {
     "@relaycorp/shared-config": "^1.9.1",
@@ -49,7 +49,7 @@
     "@types/minio": "^7.0.13",
     "del-cli": "^5.0.0",
     "dotenv": "^16.0.1",
-    "env-var": "^7.1.1",
+    "env-var": "^7.2.0",
     "gh-pages": "^4.0.0",
     "jest": "^24.9.0",
     "jest-date-mock": "^1.0.8",
