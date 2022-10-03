@@ -48,7 +48,7 @@
     "@types/jest": "^27.5.0",
     "@types/minio": "^7.0.13",
     "del-cli": "^5.0.0",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.3",
     "env-var": "^7.3.0",
     "gh-pages": "^4.0.0",
     "jest": "^24.9.0",
