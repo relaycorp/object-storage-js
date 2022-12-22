@@ -26,7 +26,7 @@ export class GCSClient implements ObjectStoreClient {
       await file.delete();
     } catch (err) {
       if ((err as any).code !== 404) {
-        throw err;
+        throw new ObjectStorageError(err as Error, 'Failed to delete object');
       }
     }
   }
@@ -39,7 +39,7 @@ export class GCSClient implements ObjectStoreClient {
       if ((err as any).code === 404) {
         return null;
       }
-      throw err;
+      throw new ObjectStorageError(err as Error, 'Failed to retrieve object');
     }
     const download = await gcsFile.download();
     return { body: download[0], metadata: gcsFile.metadata.metadata ?? {} };

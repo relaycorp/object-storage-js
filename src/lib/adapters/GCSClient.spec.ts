@@ -1,6 +1,12 @@
 import { Storage } from '@google-cloud/storage';
 
-import { asyncIterableToArray, CLIENT_CREDENTIALS, ENDPOINT, mockSpy } from '../_test_utils';
+import {
+  asyncIterableToArray,
+  CLIENT_CREDENTIALS,
+  ENDPOINT,
+  getPromiseRejection,
+  mockSpy,
+} from '../_test_utils';
 import { ObjectStorageError } from '../errors';
 import {
   BUCKET,
@@ -147,11 +153,17 @@ describe('getObject', () => {
     await expect(CLIENT.getObject(OBJECT1_KEY, BUCKET)).resolves.toBeNull();
   });
 
-  test('Errors other than a missing key should be propagated', async () => {
+  test('Errors other than a missing key should be wrapped', async () => {
     const apiError = new Error('Whoops');
     mockFile.get.mockRejectedValue(apiError);
 
-    await expect(CLIENT.getObject(OBJECT1_KEY, BUCKET)).rejects.toEqual(apiError);
+    const error = await getPromiseRejection<ObjectStorageError>(
+      CLIENT.getObject(OBJECT1_KEY, BUCKET),
+      ObjectStorageError,
+    );
+
+    expect(error.message).toStartWith('Failed to retrieve object');
+    expect(error.cause()).toEqual(apiError);
   });
 });
 
@@ -179,11 +191,17 @@ describe('deleteObject', () => {
     await expect(CLIENT.deleteObject(OBJECT1_KEY, BUCKET)).toResolve();
   });
 
-  test('Other errors should be propagated', async () => {
+  test('Other errors should be wrapped', async () => {
     const apiError = new Error('Whoops');
     mockFile.delete.mockRejectedValue(apiError);
 
-    await expect(CLIENT.deleteObject(OBJECT1_KEY, BUCKET)).rejects.toEqual(apiError);
+    const error = await getPromiseRejection(
+      CLIENT.deleteObject(OBJECT1_KEY, BUCKET),
+      ObjectStorageError,
+    );
+
+    expect(error.message).toStartWith('Failed to delete object');
+    expect(error.cause()).toEqual(apiError);
   });
 });
 
