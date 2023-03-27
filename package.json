@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^6.9.4",
-    "aws-sdk": "^2.1338.0",
+    "aws-sdk": "^2.1343.0",
     "verror": "^1.10.1"
   },
   "devDependencies": {
