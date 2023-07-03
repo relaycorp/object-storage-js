@@ -40,7 +40,7 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@google-cloud/storage": "^6.9.5",
+    "@google-cloud/storage": "^6.11.0",
     "aws-sdk": "^2.1409.0",
     "verror": "^1.10.1"
   },
