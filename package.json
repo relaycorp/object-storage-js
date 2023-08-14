@@ -53,7 +53,7 @@
     "dotenv": "^16.0.3",
     "env-var": "^7.3.1",
     "gh-pages": "^5.0.0",
-    "jest": "^29.6.1",
+    "jest": "^29.6.2",
     "jest-date-mock": "^1.0.8",
     "jest-extended": "^4.0.1",
     "minio": "^7.1.0",
