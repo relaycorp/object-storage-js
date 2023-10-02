@@ -48,7 +48,7 @@
     "@relaycorp/shared-config": "^1.14.1",
     "@types/jest": "^29.5.4",
     "@types/minio": "^7.1.1",
-    "@types/verror": "^1.10.6",
+    "@types/verror": "^1.10.7",
     "del-cli": "^5.1.0",
     "dotenv": "^16.0.3",
     "env-var": "^7.4.1",
